@@ -3,7 +3,7 @@
 
 ## 1. Context
 
-Na Escola Estadual Cívico-Militar Maria de Lima Cadidé, os professores em sala de aula precisam de um meio de comunicação ágil e confiável para solicitar apoio da Coordenação Militar. A tela inicial funciona como a tela de login do usuário, sendo uma porta de entrada mostrando as informações da instituição, e permitir a entrada de novos usuários.
+Na Escola Estadual Cívico-Militar Maria de Lima Cadidé, os professores em sala de aula precisam de um meio de comunicação ágil e confiável para solicitar apoio da Coordenação Militar. A tela inicial funciona como a porta de entrada institucional e acesso ao sistema, apresentando a identidade da escola, campos de login e caminhos para solicitação de acesso a novos usuários.
 
 ## 2. Task
 
@@ -15,9 +15,9 @@ Desenvolver a interface gráfica da tela inicial de Login e Acesso do aplicativo
 
 - **FR-02 —** Disponibilizar campos de texto para inserção de E-mail e Senha com rótulos visíveis e com visualização protegida de caracteres para a senha.
 
-- **FR-03 —**  Fornecer botão de ação primária ("Entrar") destacado para autenticação do usuário.
+- **FR-03 —** Fornecer botão de ação primária ("Entrar") destacado para autenticação do usuário.
 
-- **FR-04 —** Disponibilizar botão informativo ("Sobre o SARC") com orientações de uso e o resumo visual das 4 prioridades escolares.
+- **FR-04 —** Disponibilizar botão informativo ("Sobre o SARC") com orientações de uso e o resumo visual das 4 prioridades escolares em diálogo modal.
 
 - **FR-05 —** Fornecer botão de acesso ("Solicitar Cadastro") que direcione para a criação de novos usuários com aprovação do gestor.
 
@@ -36,7 +36,7 @@ Desenvolver a interface gráfica da tela inicial de Login e Acesso do aplicativo
 
 - **AC-03 —** O botão primário ("Entrar") possui destaque visual, contraste adequado e responde ao toque.
 
-- **AC-04 —** O botão ("Sobre o SARC") está visível na interface e permite acessar as orientações e o resumo visual das prioridades da escola.
+- **AC-04 —** O botão ("Sobre o SARC") está visível na interface e permite consultar, por meio de diálogo informativo, as orientações e o resumo visual das prioridades da escola.
 
 - **AC-05 —** O botão ("Solicitar Cadastro") está presente na tela para novos usuários.
 
@@ -63,7 +63,7 @@ Foi usada como auxiliadora e orientadora na estruturação formal da especifica�
 
 ### Generated Content
 
-A IA sugeriu o rascunho estrutural da especificação formal (SPEC-001) com base no template oficial da disciplina, além de propor e construir a formulação técnica dos requisitos funcionais (FR-01 a FR-05) e critérios de aceitação (AC-01 a AC-07) para a tela de login, que depois foi alterada pela equipe, incluindo sugestões de layout com componentes Material 3 e a localização dos pontos de acesso aos botões ("Sobre o SARC"), além de ser uma mensagem invés de uma tela nova, e ("Solicitar Cadastro").
+A IA sugeriu o rascunho estrutural da especificação formal (SPEC-001) com base no template oficial da disciplina, além de propor a formulação técnica dos requisitos funcionais (FR-01 a FR-05) e critérios de aceitação (AC-01 a AC-07) para a tela de login. A equipe ajustou e refinou os requisitos, definindo componentes Material 3 e os pontos de acesso aos botões informativos ("Sobre o SARC" em diálogo modal) e de novo acesso ("Solicitar Cadastro").
 
 ### Human Changes
 
@@ -75,8 +75,9 @@ Definição e ideia da primeira tela ser a tela de Login com campos de E-mail e 
 
 ## 9. Deliverables
 
-- `projects/team-05/docs/specs/SPEC-001.md` — Arquivo de especificação formal;
-- `projects/team-05/app/` — Código-fonte da tela implementada em Jetpack Compose;
+- `projects/team-05/SPRINT-01.md` — Documento de Definição de Produto e objetivos da Sprint;
+- `projects/team-05/docs/specs/SPEC-001.md` — Arquivo de especificação formal da tela inicial;
+- `projects/team-05/app/` — Código-fonte da tela implementada em Kotlin e Jetpack Compose;
 - `projects/team-05/evidence/sprint-01/welcome-screen.png` — Screenshot da tela em execução.
 
 ## 10. Status
