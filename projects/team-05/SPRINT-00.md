@@ -12,13 +12,13 @@
 
 ## Development Environment Status
 
-| Component | Status | Details |
-| :--- | :---: | :--- |
-| **Android Studio** | ✅ Configured | Android Studio Ladybug / Koala Feature Drop instalado |
-| **Android SDK** | ✅ Configured | SDK Platform 34 / 37, Build Tools e Platform-Tools instalados |
-| **Kotlin & Compose** | ✅ Configured | Kotlin 2.x + Jetpack Compose (Material 3) |
-| **Device / Emulator** | ✅ Configured | Emulador Android Virtual Device (AVD) e dispositivo físico configurados |
-| **Git & GitHub** | ✅ Configured | Fork realizado, remotes origin e upstream configurados |
+| Component             |    Status     | Details                                                                 |
+| :-------------------- | :-----------: | :---------------------------------------------------------------------- |
+| **Android Studio**    | ✅ Configurado | Android Studio Ladybug / Koala Feature Drop instalado                   |
+| **Android SDK**       | ✅ Configurado | SDK Platform 34 / 37, Build Tools e Platform-Tools instalados           |
+| **Kotlin & Compose**  | ✅ Configurado | Kotlin 2.x + Jetpack Compose (Material 3)                               |
+| **Device / Emulator** | ✅ Configurado | Emulador Android Virtual Device (AVD) e dispositivo físico configurados |
+| **Git & GitHub**      | ✅ Configurado | Fork realizado, remotes origin e upstream configurados                  |
 
 ---
 
