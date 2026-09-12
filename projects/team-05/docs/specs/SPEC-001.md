@@ -17,7 +17,7 @@ Desenvolver a interface gráfica da tela inicial de Login e Acesso do aplicativo
 
 - **FR-03 —** Fornecer botão de ação primária ("Entrar") destacado para autenticação do usuário.
 
-- **FR-04 —** Disponibilizar botão informativo ("Sobre o SARC") com orientações de uso e o resumo visual das 4 prioridades escolares em diálogo modal.
+- **FR-04 —** Disponibilizar botão informativo ("Sobre o SARC") que aciona uma caixa de diálogo modal (`AlertDialog`) exibindo as diretrizes de uso e o resumo visual das 4 faixas de prioridade escolar.
 
 - **FR-05 —** Fornecer botão de acesso ("Solicitar Cadastro") que direcione para a criação de novos usuários com aprovação do gestor.
 
