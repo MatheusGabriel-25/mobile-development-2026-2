@@ -83,8 +83,8 @@ Definição e ideia da primeira tela ser a tela de Login com campos de E-mail e 
 ## 10. Status
 <!-- Guia: Checklist de status de conclusão da especificação e da tela. -->
 - [x] Specification completed
-- [ ] Implementation completed
-- [ ] Acceptance criteria validated
-- [ ] Code reviewed
-- [ ] Commit created
+- [x] Implementation completed
+- [x] Acceptance criteria validated
+- [x] Code reviewed
+- [x] Commit created
 - [ ] Pull Request submitted
