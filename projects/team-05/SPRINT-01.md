@@ -167,7 +167,6 @@ A aplicação busca alcançar os seguintes resultados:
 ---
 
 ## 7. Evidence
-<!-- Guia: Salve o print do aplicativo rodando em projects/team-05/evidence/sprint-01/first-screen.png (padrão exigido pelo curso) e vincule aqui no relatório. -->
 
 ![Welcome Screen](evidence/sprint-01/first-screen.png)
 
@@ -177,12 +176,11 @@ A aplicação busca alcançar os seguintes resultados:
 
 - Diálogo modal informativo com as informações gerais do SARC e as 4 prioridades escolares - projects/team-05/evidence/sprint-01/first-screen-about-dialog.png;
 
-- Diálogo modal de solicitação de cadastro com aviso - projects/team-05/evidence/sprint-01/first-screen-register-dialog.png.
+- Diálogo modal de solicitação de cadastro com aviso sobre sprint futuras - projects/team-05/evidence/sprint-01/first-screen-register-dialog.png.
 
 ---
 
 ## 8. AI Usage
-<!-- Guia: Documente o uso de ferramentas de IA conforme as regras do curso, destacando o que a IA sugeriu, o que a equipe revisou e modificou manualmente, e como o resultado foi validado na prática. -->
 
 ### Tool
 
@@ -193,30 +191,26 @@ Google Antigravity (Gemini).
 Auxílio na estruturação técnica da especificação formal (SPEC-001) e (SPRINT-01), desenvolvimento e organização composable em Jetpack Compose Material 3 e diagnóstico de compilação no Gradle.
 
 ### Generated Content
-<!-- Guia: O que foi gerado ou sugerido pela IA? -->
-A IA foi utilizada como auxiliadora e guiadora nos documentos de especificação e do sprint
-<!-- Sugestão: A IA sugeriu a estrutura composable inicial em WelcomeScreen.kt, a formulação técnica dos requisitos funcionais (FR-01 a FR-05), os cartões visuais de prioridade escolar em Material Design 3 e catálogo de dependências no Gradle (libs.versions.toml). -->
+
+A IA foi utilizada como auxiliadora e guiadora nos documentos de especificação, do sprint-01, sugeriu e desenvolveu a estrutura composable inicial em WelcomeScreen.kt, a formulação técnica dos requisitos funcionais (FR-01 a FR-05), os cartões visuais de prioridade escolar em Material Design 3 e catálogo de dependências no Gradle (libs.versions.toml).
+
 
 ### Human Changes
-<!-- Guia: O que foi revisado, corrigido ou modificado pelos alunos? -->
-_[Descreva o que foi alterado e refinado manualmente]_
-<!-- Sugestão: A equipe de alunos refinou o escopo institucional da Escola Estadual Cívico-Militar Maria de Lima Cadidé, definiu e importou o brasão oficial no drawable, ajustou os textos dos diálogos modais e das 4 faixas de prioridade, além de conduzir todos os testes e capturas de tela no emulador Pixel 8 (Android 37.0). -->
+
+A equipe de alunos refinou o escopo institucional da Escola Estadual Cívico-Militar Maria de Lima Cadidé, importou o brasão oficial, mandou os textos dos diálogos modais e das 4 faixas de prioridade, além de conduzir todos os testes e capturas de tela no emulador Pixel 8 (Android 37.0).
 
 ### Validation
-<!-- Guia: Como a solução gerada foi testada e validada? -->
-_[Descreva como a solução foi validada contra a especificação]_
-<!-- Sugestão: A solução gerada foi compilada localmente via Gradle (./gradlew assembleDebug) e testada no emulador Pixel 8 (Android 37.0), confirmando o cumprimento de 100% dos critérios da SPEC-001 e do SPRINT-01. -->
 
-<!--
-Sugestão de Tabela Síntese (Novo Padrão do Curso):
-| Item | Team response |
-| --- | --- |
-| LLM/tool used | Google Antigravity (Gemini) |
-| Task supported by the LLM | Estruturação formal dos documentos de especificação (SPEC-001) e relatório (SPRINT-01), sugestão da arquitetura composable em Jetpack Compose Material 3 |
-| Main suggestion received | Estrutura composable vertical responsiva em WelcomeScreen.kt, definição dos cards de prioridades escolares e configuração de dependências |
-| What the team changed manually | Refinamento do escopo do problema da Escola Cadidé, inclusão do brasão oficial no drawable, definição dos textos institucionais e testes no emulador |
-| How the result was validated | Compilação com ./gradlew assembleDebug, teste funcional no emulador Pixel 8 (Android 37.0) e conferência com os critérios de aceitação |
--->
+A solução gerada foi compilada localmente via Gradle (./gradlew assembleDebug) e testada no emulador Pixel 8 (Android 37.0), validando os critérios da SPEC-001 e do SPRINT-01. 
+
+| Item                           | Team response                                                                                                                                                               |
+| ------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| LLM/tool used                  | Google Antigravity (Gemini).                                                                                                                                                |
+| Task supported by the LLM      | Estruturação formal dos documentos de especificação (SPEC-001) e relatório (SPRINT-01), sugestão e desenvolvimento da arquitetura composable em Jetpack Compose Material 3. |
+| Main suggestion received       | Estrutura composable vertical responsiva em WelcomeScreen.kt, definição dos cards de prioridades escolares e configuração de dependências.                                  |
+| What the team changed manually | Refinamento do escopo do problema da Escola Cadidé, inclusão do brasão oficial, revisão dos textos do (SPEC-001) e (SPRINT-01), e testes no emulador e seus capturas.       |
+| How the result was validated   | Compilação com ./gradlew assembleDebug, teste funcional no emulador Pixel 8 (Android 37.0) e conferência com os critérios de aceitação.                                     |
+
 
 ---
 
