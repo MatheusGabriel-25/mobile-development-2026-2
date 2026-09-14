@@ -100,26 +100,33 @@ A aplicação busca alcançar os seguintes resultados:
 
 ## 3. First Screen Implementation
 
-- **Framework:** Kotlin 2.2.10 + Jetpack Compose (Material 3)
+- **Framework:** Kotlin 2.2.10 + Jetpack Compose (Material 3);
 - **Módulo:** `projects/team-05/app/`
-- **Componentes e Layout:**
-  - `Surface` e `Column` com alinhamento central e rolagem vertical (`verticalScroll(rememberScrollState())`) para garantir responsividade e evitar corte de componentes com teclado virtual;
-  - `Image` com `painterResource(R.drawable.ic_brasao_cadide)` para renderização do brasão oficial da escola em alta fidelidade;
-  - `Text` estilizados com tipografia Material 3 e paleta de cores institucional (`SarcNavyPrimary`, `SarcNavyDark`, `SarcGreenSecondary`);
-  - `OutlinedTextField` com cantos arredondados (12dp), ícones `leadingIcon` (Email e Lock) e botão de alternância `trailingIcon` (Visibility / VisibilityOff) com máscara de senha (`PasswordVisualTransformation`);
-  - `Button` primário ("Entrar") com cores institucionais em alto contraste;
-  - `OutlinedButton` secundário ("Sobre o SARC e Prioridades") com acionamento de `AlertDialog` modal contendo `Card` e `Box` coloridos para cada faixa de prioridade escolar (🟢 Nível 1 - Apoio, 🟡 Nível 2 - Atenção, 🟠 Nível 3 - Prioridade, 🔴 Nível 4 - Urgência);
-  - `TextButton` terciário ("Solicitar Cadastro") com diálogo modal orientativo para novos docentes.
+- **Componentes e Layout:** 
+
+	- **Surface** e **Column** com alinhamento central e rolagem vertical (verticalScroll(rememberScrollState())) para garantir responsividade e evitar corte de componentes com teclado virtual ativo;
+
+	- Image com painterResource(R.drawable.ic_brasao_cadide) para renderização do brasão oficial da escola em alta fidelidade;
+
+	- Text estilizados com a tipografia Material 3 e paleta de cores institucional (SarcNavyPrimary, SarcNavyDark, SarcGreenSecondary);
+
+	- OutlinedTextField com cantos arredondados (12dp), ícones leadingIcon (Email e Lock) e botão de alternância trailingIcon (Visibility / VisibilityOff) com máscara de senha (PasswordVisualTransformation);
+
+	- Button primário ("Entrar") com cores institucionais em alto contraste;
+
+	- OutlinedButton secundário ("Sobre o SARC e Prioridades") com acionamento de AlertDialog modal contendo Card e Box coloridos para cada faixa de prioridade escolar (🟢 Nível 1 - Apoio, 🟡 Nível 2 - Atenção, 🟠 Nível 3 - Prioridade, 🔴 Nível 4 - Urgência);
+
+	- TextButton terciário ("Solicitar Cadastro") com diálogo modal orientativo para novos docentes.
 
 ---
 
 ## 4. Scope
 
-- **Fora de Escopo nesta Sprint 01:**
-  - Integração com banco de dados local (Room / SQLite);
-  - Autenticação e chamadas de rede com API ou servidor remoto;
-  - Telas secundárias funcionais de cadastro de usuários e painel de triagem em tempo real (planejadas para sprints posteriores);
-  - Envio de notificações push ou integrações de hardware.
+- Integração com banco de dados local (Room / SQLite);
+
+- Tela secundária funcional da solicitação de novos usuários e painel de triagem em tempo real;
+
+- Envio de notificações push ou integrações de hardware.
 
 ---
 
@@ -145,53 +152,71 @@ A aplicação busca alcançar os seguintes resultados:
 
 ## 6. Validation
 
-1. **Compilação Gradle:** O projeto foi compilado sem erros ou advertências via `./gradlew assembleDebug` (36 tarefas executadas com sucesso, APK de depuração gerado).
-2. **Execução no Emulador:** O aplicativo foi instalado e executado no emulador oficial Pixel 8 (Android API 35/37) sem falhas ou travamentos.
-3. **Teste Interativo de Campos:** Testada a digitação interativa no campo de E-mail Institucional e campo de Senha com máscara protetora de caracteres (`••••••`) e botão de alternância de visibilidade.
-4. **Teste do Diálogo Modal de Prioridades:** Testado o clique no botão "Sobre o SARC e Prioridades", validando a abertura do modal com os 4 badges coloridos (🟢 Nível 1 - Apoio, 🟡 Nível 2 - Atenção, 🟠 Nível 3 - Prioridade, 🔴 Nível 4 - Urgência).
-5. **Teste do Diálogo de Cadastro:** Testado o clique no botão "Solicitar Cadastro", validando a exibição do diálogo modal com fluxo orientador para novos servidores.
-6. **Captura de Evidências:** Os prints comprobatórios foram devidamente capturados e armazenados em `projects/team-05/evidence/sprint-01/`.
+1. Compilação Gradle: O projeto foi compilado sem erros ou advertências via ./gradlew assembleDebug.
+
+2. Execução no Emulador: O app foi instalado e executado no emulador oficial do Android Studio Pixel 8 (Android 37.0 / API 37) sem falhas.
+
+3. Teste Interativo de Campos:  Foi testada a digitação interativa no campo de E-mail Institucional e campo de Senha com máscara protetora de caracteres (••••••) e botão de alternância de visibilidade.
+
+4. Teste do Diálogo Modal de Prioridades: Testado o clique no botão "Sobre o SARC e Prioridades", validando a abertura do modal com as informações gerais do SARC e com os 4 badges coloridos (🟢 Nível 1 - Apoio, 🟡 Nível 2 - Atenção, 🟠 Nível 3 - Prioridade, 🔴 Nível 4 - Urgência).
+
+5. Teste do Diálogo de Cadastro: Testado o clique no botão "Solicitar Cadastro", validando a exibição do diálogo modal com fluxo orientador para novos servidores e avisando que será implementado em futuro.
+
+6. Captura de Evidências: Os prints comprobatórios foram devidamente capturados e armazenados em projects/team-05/evidence/sprint-01/.
 
 ---
 
 ## 7. Evidence
+<!-- Guia: Salve o print do aplicativo rodando em projects/team-05/evidence/sprint-01/first-screen.png (padrão exigido pelo curso) e vincule aqui no relatório. -->
 
-- **Primeira Tela (Padrão Curso):** [`evidence/sprint-01/first-screen.png`](evidence/sprint-01/first-screen.png)
-- **Tela de Apresentação:** [`evidence/sprint-01/welcome-screen.png`](evidence/sprint-01/welcome-screen.png)
-- **Campos Interativos Preenchidos:** [`evidence/sprint-01/welcome-screen-interactive.png`](evidence/sprint-01/welcome-screen-interactive.png)
-- **Modal de Diretrizes e Prioridades:** [`evidence/sprint-01/welcome-screen-about-dialog.png`](evidence/sprint-01/welcome-screen-about-dialog.png)
-- **Modal de Solicitação de Cadastro:** [`evidence/sprint-01/welcome-screen-register-dialog.png`](evidence/sprint-01/welcome-screen-register-dialog.png)
+![Welcome Screen](evidence/sprint-01/first-screen.png)
 
-![Primeira Tela - SARC](evidence/sprint-01/first-screen.png)
+- Primeira tela rodando - projects/team-05/evidence/sprint-01/first-screen.png;
+
+- Campos preenchidos com e-mail e senha mascarada - projects/team-05/evidence/sprint-01/first-screen-interactive.png;
+
+- Diálogo modal informativo com as informações gerais do SARC e as 4 prioridades escolares - projects/team-05/evidence/sprint-01/first-screen-about-dialog.png;
+
+- Diálogo modal de solicitação de cadastro com aviso - projects/team-05/evidence/sprint-01/first-screen-register-dialog.png.
 
 ---
 
 ## 8. AI Usage
+<!-- Guia: Documente o uso de ferramentas de IA conforme as regras do curso, destacando o que a IA sugeriu, o que a equipe revisou e modificou manualmente, e como o resultado foi validado na prática. -->
 
-### Summary Table
+### Tool
 
+Google Antigravity (Gemini).
+
+### Purpose
+
+Auxílio na estruturação técnica da especificação formal (SPEC-001) e (SPRINT-01), desenvolvimento e organização composable em Jetpack Compose Material 3 e diagnóstico de compilação no Gradle.
+
+### Generated Content
+<!-- Guia: O que foi gerado ou sugerido pela IA? -->
+A IA foi utilizada como auxiliadora e guiadora nos documentos de especificação e do sprint
+<!-- Sugestão: A IA sugeriu a estrutura composable inicial em WelcomeScreen.kt, a formulação técnica dos requisitos funcionais (FR-01 a FR-05), os cartões visuais de prioridade escolar em Material Design 3 e catálogo de dependências no Gradle (libs.versions.toml). -->
+
+### Human Changes
+<!-- Guia: O que foi revisado, corrigido ou modificado pelos alunos? -->
+_[Descreva o que foi alterado e refinado manualmente]_
+<!-- Sugestão: A equipe de alunos refinou o escopo institucional da Escola Estadual Cívico-Militar Maria de Lima Cadidé, definiu e importou o brasão oficial no drawable, ajustou os textos dos diálogos modais e das 4 faixas de prioridade, além de conduzir todos os testes e capturas de tela no emulador Pixel 8 (Android 37.0). -->
+
+### Validation
+<!-- Guia: Como a solução gerada foi testada e validada? -->
+_[Descreva como a solução foi validada contra a especificação]_
+<!-- Sugestão: A solução gerada foi compilada localmente via Gradle (./gradlew assembleDebug) e testada no emulador Pixel 8 (Android 37.0), confirmando o cumprimento de 100% dos critérios da SPEC-001 e do SPRINT-01. -->
+
+<!--
+Sugestão de Tabela Síntese (Novo Padrão do Curso):
 | Item | Team response |
 | --- | --- |
 | LLM/tool used | Google Antigravity (Gemini) |
 | Task supported by the LLM | Estruturação formal dos documentos de especificação (SPEC-001) e relatório (SPRINT-01), sugestão da arquitetura composable em Jetpack Compose Material 3 |
-| Main suggestion received | Estrutura composable vertical responsiva em `WelcomeScreen.kt`, definição dos cards de prioridades escolares e configuração das dependências no catálogo do Gradle |
-| What the team changed manually | Refinamento do escopo do problema da Escola Estadual Cívico-Militar Maria de Lima Cadidé, vetorização e inclusão do brasão oficial, definição dos textos institucionais e execução de todos os testes no emulador |
-| How the result was validated | Compilação com `./gradlew assembleDebug`, teste funcional no emulador Pixel 8, conferência visual dos componentes e verificação de conformidade com os critérios de aceitação |
-
-### Tool
-Google Antigravity (Gemini).
-
-### Purpose
-Auxílio na estruturação técnica da especificação formal (SPEC-001), elaboração dos relatórios e apoio na organização da arquitetura em Jetpack Compose com Material Design 3.
-
-### Generated Content
-A IA foi utilizada como auxiliadora e guiadora nos documentos de especificação e do sprint, sugerindo a estrutura composable inicial em `WelcomeScreen.kt`, os cartões visuais de prioridade com Material Design 3 e catálogo de dependências.
-
-### Human Changes
-A equipe de alunos refinou o escopo institucional da Escola Estadual Cívico-Militar Maria de Lima Cadidé, definiu e importou o brasão oficial no drawable, ajustou as 4 faixas de prioridade e os textos explicativos dos diálogos modais, além de conduzir todos os testes e capturas de tela no dispositivo emulado.
-
-### Validation
-A solução foi compilada localmente com o Gradle (`./gradlew assembleDebug`) e validada em tempo real no emulador Pixel 8 (Android API 35/37), confirmando o cumprimento integral dos critérios da SPEC-001 e do SPRINT-01.
+| Main suggestion received | Estrutura composable vertical responsiva em WelcomeScreen.kt, definição dos cards de prioridades escolares e configuração de dependências |
+| What the team changed manually | Refinamento do escopo do problema da Escola Cadidé, inclusão do brasão oficial no drawable, definição dos textos institucionais e testes no emulador |
+| How the result was validated | Compilação com ./gradlew assembleDebug, teste funcional no emulador Pixel 8 (Android 37.0) e conferência com os critérios de aceitação |
+-->
 
 ---
 
@@ -200,5 +225,4 @@ A solução foi compilada localmente com o Gradle (`./gradlew assembleDebug`) e 
 - `projects/team-05/app/` — Código-fonte do projeto Android
 - `projects/team-05/SPRINT-01.md` — Relatório da Sprint 01
 - `projects/team-05/docs/specs/SPEC-001.md` — Especificação da primeira tela
-- `projects/team-05/evidence/sprint-01/first-screen.png` — Evidência de execução (requisito do curso)
-- `projects/team-05/evidence/sprint-01/welcome-screen.png` — Evidência de execução complementar
+- `projects/team-05/evidence/sprint-01/first-screen.png` — Evidência de execução

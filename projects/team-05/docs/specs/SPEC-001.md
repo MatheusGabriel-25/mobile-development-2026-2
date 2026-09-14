@@ -50,17 +50,17 @@ Desenvolver a interface gráfica da tela inicial de Login e Acesso do aplicativo
 2. Executar no emulador AVD ou celular físico; 
 3. Digitar nos campos de E-mail e Senha;
 4. Testar o clique no botão 'Entrar', 'Sobre o SARC' e 'Solicitar Cadastro';
-5. Tirar screenshot e salvar em `projects/team-05/evidence/sprint-01/first-screen.png` (e `welcome-screen.png`).
+5. Tirar screenshot e salvar em `projects/team-05/evidence/sprint-01/first-screen.png`.
 
 ## 7. Requirement Traceability
 
-| Requirement | Implemented In                                                     | Acceptance Criterion | Evidence                             |
-| ----------- | ------------------------------------------------------------------ | -------------------- | ------------------------------------ |
-| FR-01       | `WelcomeScreen.kt` (Header Column, Image, Text)                    | AC-01                | `first-screen.png`                   |
-| FR-02       | `WelcomeScreen.kt` (OutlinedTextFields email e password)           | AC-02                | `welcome-screen-interactive.png`     |
-| FR-03       | `WelcomeScreen.kt` (Button "Entrar")                               | AC-03                | `first-screen.png`                   |
-| FR-04       | `WelcomeScreen.kt` (OutlinedButton "Sobre o SARC" + AlertDialog)   | AC-04                | `welcome-screen-about-dialog.png`    |
-| FR-05       | `WelcomeScreen.kt` (TextButton "Solicitar Cadastro" + AlertDialog) | AC-05                | `welcome-screen-register-dialog.png` |
+| Requirement | Implemented In | Acceptance Criterion | Evidence |
+| --- | --- | --- | --- |
+| FR-01 | `WelcomeScreen.kt` (Header Column, Image, Text) | AC-01 | `first-screen.png` |
+| FR-02 | `WelcomeScreen.kt` (OutlinedTextFields email e password) | AC-02 | `first-screen-interactive.png` |
+| FR-03 | `WelcomeScreen.kt` (Button "Entrar") | AC-03 | `first-screen.png` |
+| FR-04 | `WelcomeScreen.kt` (OutlinedButton "Sobre o SARC" + AlertDialog) | AC-04 | `first-screen-about-dialog.png` |
+| FR-05 | `WelcomeScreen.kt` (TextButton "Solicitar Cadastro" + AlertDialog) | AC-05 | `first-screen-register-dialog.png` |
 
 ## 8. Validation Results
 
@@ -118,8 +118,7 @@ Definição e ideia da primeira tela ser a tela de Login com campos de E-mail e 
 - `projects/team-05/SPRINT-01.md` — Documento de Definição de Produto e objetivos da Sprint;
 - `projects/team-05/docs/specs/SPEC-001.md` — Arquivo de especificação formal da tela inicial;
 - `projects/team-05/app/` — Código-fonte da tela implementada em Kotlin e Jetpack Compose;
-- `projects/team-05/evidence/sprint-01/first-screen.png` — Screenshot da tela em execução (padrão do curso);
-- `projects/team-05/evidence/sprint-01/welcome-screen-about-dialog` — Screenshot complementar da tela.
+- `projects/team-05/evidence/sprint-01/first-screen.png` — Screenshot da tela em execução (padrão do curso).
 
 ---
 
