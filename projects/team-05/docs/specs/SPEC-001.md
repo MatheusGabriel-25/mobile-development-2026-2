@@ -44,7 +44,15 @@ Desenvolver a interface gráfica da tela inicial de Login e Acesso do aplicativo
 
 - **AC-07 —** O projeto compila no Android Studio / Gradle sem erros e executa no emulador/dispositivo sem travamentos.
 
-## 6. Requirement Traceability
+## 6. Validation
+
+1. Compilar o projeto no Gradle;
+2. Executar no emulador AVD ou celular físico; 
+3. Digitar nos campos de E-mail e Senha;
+4. Testar o clique no botão 'Entrar', 'Sobre o SARC' e 'Solicitar Cadastro';
+5. Tirar screenshot e salvar em `projects/team-05/evidence/sprint-01/first-screen.png` (e `welcome-screen.png`).
+
+## 7. Requirement Traceability
 
 | Requirement | Implemented In | Acceptance Criterion | Evidence |
 | --- | --- | --- | --- |
@@ -54,17 +62,15 @@ Desenvolver a interface gráfica da tela inicial de Login e Acesso do aplicativo
 | FR-04 | `WelcomeScreen.kt` (OutlinedButton "Sobre o SARC" + AlertDialog) | AC-04 | `welcome-screen-about-dialog.png` |
 | FR-05 | `WelcomeScreen.kt` (TextButton "Solicitar Cadastro" + AlertDialog) | AC-05 | `welcome-screen-register-dialog.png` |
 
----
-
-## 7. Validation Results
+## 8. Validation Results
 
 | Acceptance Criterion | Result | Notes |
 | --- | --- | --- |
 | AC-01 | PASS | Cabeçalho visível com brasão oficial, título SARC, escola e slogan |
 | AC-02 | PASS | Campos de E-mail e Senha funcionais com digitação interativa e máscara de senha |
-| AC-03 | PASS | Botão 'Entrar' destacado com alto contraste e clique funcional |
-| AC-04 | PASS | Botão 'Sobre o SARC' abre modal com as 4 faixas de prioridade escolar |
-| AC-05 | PASS | Botão 'Solicitar Cadastro' visível e abre modal informativo |
+| AC-03 | PASS | Botão ("Entrar") destacado com alto contraste e clique funcional |
+| AC-04 | PASS | Botão ("Sobre o SARC") abre modal com as 4 faixas de prioridade escolar |
+| AC-05 | PASS | Botão ("Solicitar Cadastro") visível e abre modal informativo |
 | AC-06 | PASS | Layout com rolagem suave, sem corte de componentes ou sobreposições |
 | AC-07 | PASS | Compilação com Gradle OK (`./gradlew assembleDebug`) e execução sem erros no emulador |
 
@@ -75,29 +81,17 @@ Desenvolver a interface gráfica da tela inicial de Login e Acesso do aplicativo
 - **Build result:** PASS (`./gradlew assembleDebug` - BUILD SUCCESSFUL)
 - **Application execution:** PASS (Execução contínua sem crash)
 
----
-
-## 8. Evidence
-
-- `projects/team-05/evidence/sprint-01/first-screen.png`
-- `projects/team-05/evidence/sprint-01/welcome-screen.png`
-- `projects/team-05/evidence/sprint-01/welcome-screen-interactive.png`
-- `projects/team-05/evidence/sprint-01/welcome-screen-about-dialog.png`
-- `projects/team-05/evidence/sprint-01/welcome-screen-register-dialog.png`
-
----
-
 ## 9. AI Usage
 
 ### Summary Table
 
-| Item | Team response |
-| --- | --- |
-| LLM/tool used | Google Antigravity (Gemini) |
-| Task supported by the LLM | Estruturação formal da especificação SPEC-001 adaptada para tela de Login institucional |
-| Main suggestion received | Formulação técnica dos requisitos funcionais (FR-01 a FR-05) e critérios de aceitação mensuráveis (AC-01 a AC-07) |
+| Item                           | Team response                                                                                                            |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| LLM/tool used                  | Google Antigravity (Gemini)                                                                                              |
+| Task supported by the LLM      | Estruturação formal da especificação SPEC-001 adaptada para tela de Login institucional                                  |
+| Main suggestion received       | Formulação técnica dos requisitos funcionais (FR-01 a FR-05) e critérios de aceitação mensuráveis (AC-01 a AC-07)        |
 | What the team changed manually | Definição da interface de login, inclusão do botão de sobre/prioridades da Escola Cadidé e botão para solicitar cadastro |
-| How the result was validated | Validação visual e funcional dos requisitos no emulador Android Studio Pixel 8 |
+| How the result was validated   | Validação visual e funcional dos requisitos no emulador Android Studio Pixel 8                                           |
 
 ### Tool
 Google Antigravity (Gemini).
@@ -136,4 +130,4 @@ Definição e ideia da primeira tela ser a tela de Login com campos de E-mail e 
 - [x] Acceptance criteria validated
 - [x] Code reviewed
 - [x] Commit created
-- [ ] Pull Request submitted
+- [x] Pull Request submitted
