@@ -91,139 +91,114 @@ A aplicação busca alcançar os seguintes resultados:
 ---
 
 ## 2. Feature Specification (SPEC-001)
-<!-- Guia (AC-05, AC-06, AC-07): Crie a especificação formal da primeira tela em docs/specs/SPEC-001.md usando o template oficial. -->
 
 - **Caminho da Especificação:** [`docs/specs/SPEC-001.md`](docs/specs/SPEC-001.md)
-- **Resumo da Especificação:** _[Descreva resumidamente o que foi especificado para a primeira tela]_
 
-<!-- 
-Sugestão de Resumo da Especificação:
-A especificação define a interface da tela inicial e de autenticação institucional do SARC. A tela contempla: o Brasão da Escola Cadidé centralizado no cabeçalho; identificação do SARC e slogan cívico-militar; campos interativos de E-mail Institucional e Senha com máscara (••••••) e alternância de visibilidade; botão primário de destaque ("Entrar"); botão informativo ("Sobre o SARC") acionando diálogo modal com as 4 faixas de prioridade escolar (🟢 Apoio, 🟡 Atenção, 🟠 Prioridade, 🔴 Urgência); e botão de encaminhamento para novos usuários ("Solicitar Cadastro").
--->
+- **Resumo da Especificação:**  A primeira especificação foi definida a interface inicial da tela de login e de autenticação institucional do SARC. Nessa primeira tela tem o Brasão da Escola Cadidé centralizado no cabeçalho junto com a palavra do SARC e seu slogan junto com campos interativo para escrever o E-mail Institucional e Senha com máscara (••••••) e alternância de visibilidade, com o botão ("Entrar") para entrar no SARC, um botão informativo ("Sobre o SARC") que aparece uma mensagem sobre o que é o aplicativo e sua regra de prioridades e um botão para solicitar o seu cadastro ("Solicitar Cadastro") que no futuro aparecerá uma tela para colocar o seu nome completo, e-mail, celular e a senha que vai utilizar no aplicativo.
 
 ---
 
 ## 3. First Screen Implementation
-<!-- Guia (AC-08 a AC-14): Implemente a primeira tela com Kotlin e Jetpack Compose (Column, Row, Text, Button, Spacer, Modifier). -->
 
-- **Framework:** Kotlin + Jetpack Compose (Material 3)
+- **Framework:** Kotlin 2.2.10 + Jetpack Compose (Material 3)
 - **Módulo:** `projects/team-05/app/`
-- **Componentes e Layout:** _[Descreva os componentes Compose utilizados e como o layout foi organizado]_
-
-<!--
-Sugestão de Componentes e Layout:
-- Framework: Kotlin 2.2.10 + Jetpack Compose (Material 3)
-- Surface e Column com alinhamento central e rolagem vertical (verticalScroll(rememberScrollState())) para garantir responsividade e evitar quebras de layout com o teclado virtual ativo;
-- Image com painterResource(R.drawable.ic_brasao_cadide) para renderização do brasão da escola em alta fidelidade;
-- Text estilizados com a tipografia Material 3 e paleta de cores institucional (SarcNavyPrimary, SarcNavyDark, SarcGreenSecondary);
-- OutlinedTextField com cantos arredondados (12dp), ícones leadingIcon (Email e Lock) e botão de alternância trailingIcon (Visibility / VisibilityOff);
-- Button primário ("Entrar") com cores institucionais em alto contraste;
-- OutlinedButton secundário ("Sobre o SARC e Prioridades") com acionamento de AlertDialog modal contendo Card e Box coloridos para cada faixa de prioridade;
-- TextButton terciário ("Solicitar Cadastro") com diálogo explicativo para novos docentes.
--->
+- **Componentes e Layout:**
+  - `Surface` e `Column` com alinhamento central e rolagem vertical (`verticalScroll(rememberScrollState())`) para garantir responsividade e evitar corte de componentes com teclado virtual;
+  - `Image` com `painterResource(R.drawable.ic_brasao_cadide)` para renderização do brasão oficial da escola em alta fidelidade;
+  - `Text` estilizados com tipografia Material 3 e paleta de cores institucional (`SarcNavyPrimary`, `SarcNavyDark`, `SarcGreenSecondary`);
+  - `OutlinedTextField` com cantos arredondados (12dp), ícones `leadingIcon` (Email e Lock) e botão de alternância `trailingIcon` (Visibility / VisibilityOff) com máscara de senha (`PasswordVisualTransformation`);
+  - `Button` primário ("Entrar") com cores institucionais em alto contraste;
+  - `OutlinedButton` secundário ("Sobre o SARC e Prioridades") com acionamento de `AlertDialog` modal contendo `Card` e `Box` coloridos para cada faixa de prioridade escolar (🟢 Nível 1 - Apoio, 🟡 Nível 2 - Atenção, 🟠 Nível 3 - Prioridade, 🔴 Nível 4 - Urgência);
+  - `TextButton` terciário ("Solicitar Cadastro") com diálogo modal orientativo para novos docentes.
 
 ---
 
 ## 4. Scope
-<!-- Guia: Indique o que explicitamente NÃO faz parte desta Sprint (ex: sem banco de dados, sem auth, sem múltiplas telas). -->
 
-- _[Liste o que está fora de escopo nesta Sprint 01]_
-
-<!--
-Sugestão de Fora de Escopo:
-- Integração com banco de dados local (Room / SQLite);
-- Autenticação e chamadas de rede com API ou servidor remoto;
-- Telas secundárias de cadastro de usuários e painel de triagem em tempo real (planejados para as sprints subsequentes).
--->
+- **Fora de Escopo nesta Sprint 01:**
+  - Integração com banco de dados local (Room / SQLite);
+  - Autenticação e chamadas de rede com API ou servidor remoto;
+  - Telas secundárias funcionais de cadastro de usuários e painel de triagem em tempo real (planejadas para sprints posteriores);
+  - Envio de notificações push ou integrações de hardware.
 
 ---
 
 ## 5. Acceptance Criteria
-<!-- Guia: Marque com [x] os critérios que forem sendo validados e concluídos pela equipe. -->
 
 - [x] **AC-01** — The application has a clearly defined name.
 - [x] **AC-02** — The problem addressed by the application is documented.
 - [x] **AC-03** — The target users are identified.
 - [x] **AC-04** — The initial product goal is documented.
-- [ ] **AC-05** — `SPEC-001.md` exists in the required directory.
-- [ ] **AC-06** — SPEC-001 contains functional requirements.
-- [ ] **AC-07** — SPEC-001 contains measurable acceptance criteria.
-- [ ] **AC-08** — The first screen is implemented using Jetpack Compose.
-- [ ] **AC-09** — The application name is visible on the screen.
-- [ ] **AC-10** — A description or slogan is visible.
-- [ ] **AC-11** — At least one primary action button is present.
-- [ ] **AC-12** — The application builds successfully.
-- [ ] **AC-13** — The application runs without crashing.
-- [ ] **AC-14** — The implemented screen satisfies SPEC-001.
-- [ ] **AC-15** — The team can explain the implementation.
+- [x] **AC-05** — `SPEC-001.md` exists in the required directory.
+- [x] **AC-06** — SPEC-001 contains functional requirements.
+- [x] **AC-07** — SPEC-001 contains measurable acceptance criteria.
+- [x] **AC-08** — The first screen is implemented using Jetpack Compose.
+- [x] **AC-09** — The application name is visible on the screen.
+- [x] **AC-10** — A description or slogan is visible.
+- [x] **AC-11** — At least one primary action button is present.
+- [x] **AC-12** — The application builds successfully.
+- [x] **AC-13** — The application runs without crashing.
+- [x] **AC-14** — The implemented screen satisfies SPEC-001.
+- [x] **AC-15** — The team can explain the implementation.
 
 ---
 
 ## 6. Validation
-<!-- Guia: Descreva os procedimentos práticos de teste (build, execução no emulador/dispositivo, checagem contra a SPEC). -->
 
-_[Descreva aqui o procedimento de validação realizado pela equipe]_
-
-<!--
-Sugestão de Validação Realizada:
-1. Compilação Gradle: O projeto foi compilado sem erros ou advertências via ./gradlew assembleDebug (BUILD SUCCESSFUL in 2m 44s, 36 tasks executed).
-2. Execução no Emulador: O app foi instalado e executado no emulador oficial Pixel 8 (Android 37.0).
-3. Teste Interativo de Campos: Testada a digitação interativa no campo de E-mail (matheus@escola.gov.br) e campo de Senha com máscara protetora de caracteres.
-4. Teste do Diálogo Modal de Prioridades: Clicado no botão "Sobre o SARC e Prioridades", validando a abertura do modal com os 4 badges coloridos (🟢 Nível 1, 🟡 Nível 2, 🟠 Nível 3, 🔴 Nível 4).
-5. Teste do Diálogo de Cadastro: Clicado no botão "Solicitar Cadastro", validando o fluxo orientador para novos servidores.
-6. Captura de Evidências: Os prints comprobatórios foram salvos em projects/team-05/evidence/sprint-01/.
--->
+1. **Compilação Gradle:** O projeto foi compilado sem erros ou advertências via `./gradlew assembleDebug` (36 tarefas executadas com sucesso, APK de depuração gerado).
+2. **Execução no Emulador:** O aplicativo foi instalado e executado no emulador oficial Pixel 8 (Android API 35/37) sem falhas ou travamentos.
+3. **Teste Interativo de Campos:** Testada a digitação interativa no campo de E-mail Institucional e campo de Senha com máscara protetora de caracteres (`••••••`) e botão de alternância de visibilidade.
+4. **Teste do Diálogo Modal de Prioridades:** Testado o clique no botão "Sobre o SARC e Prioridades", validando a abertura do modal com os 4 badges coloridos (🟢 Nível 1 - Apoio, 🟡 Nível 2 - Atenção, 🟠 Nível 3 - Prioridade, 🔴 Nível 4 - Urgência).
+5. **Teste do Diálogo de Cadastro:** Testado o clique no botão "Solicitar Cadastro", validando a exibição do diálogo modal com fluxo orientador para novos servidores.
+6. **Captura de Evidências:** Os prints comprobatórios foram devidamente capturados e armazenados em `projects/team-05/evidence/sprint-01/`.
 
 ---
 
 ## 7. Evidence
-<!-- Guia: Salve o print do aplicativo rodando em projects/team-05/evidence/sprint-01/welcome-screen.png. -->
 
-![Welcome Screen](evidence/sprint-01/welcome-screen.png)
+- **Primeira Tela (Padrão Curso):** [`evidence/sprint-01/first-screen.png`](evidence/sprint-01/first-screen.png)
+- **Tela de Apresentação:** [`evidence/sprint-01/welcome-screen.png`](evidence/sprint-01/welcome-screen.png)
+- **Campos Interativos Preenchidos:** [`evidence/sprint-01/welcome-screen-interactive.png`](evidence/sprint-01/welcome-screen-interactive.png)
+- **Modal de Diretrizes e Prioridades:** [`evidence/sprint-01/welcome-screen-about-dialog.png`](evidence/sprint-01/welcome-screen-about-dialog.png)
+- **Modal de Solicitação de Cadastro:** [`evidence/sprint-01/welcome-screen-register-dialog.png`](evidence/sprint-01/welcome-screen-register-dialog.png)
 
-<!--
-Evidências adicionais da validação interativa salvas:
-- projects/team-05/evidence/sprint-01/welcome-screen-interactive.png (Campos preenchidos e senha mascarada)
-- projects/team-05/evidence/sprint-01/welcome-screen-about-dialog.png (Diálogo modal informativo com as 4 prioridades)
-- projects/team-05/evidence/sprint-01/welcome-screen-register-dialog.png (Diálogo modal de solicitação de cadastro)
--->
+![Primeira Tela - SARC](evidence/sprint-01/first-screen.png)
 
 ---
 
 ## 8. AI Usage
-<!-- Guia: Documente o uso de ferramentas de IA conforme docs/ai-policy.md (responsabilidade do estudante). -->
+
+### Summary Table
+
+| Item | Team response |
+| --- | --- |
+| LLM/tool used | Google Antigravity (Gemini) |
+| Task supported by the LLM | Estruturação formal dos documentos de especificação (SPEC-001) e relatório (SPRINT-01), sugestão da arquitetura composable em Jetpack Compose Material 3 |
+| Main suggestion received | Estrutura composable vertical responsiva em `WelcomeScreen.kt`, definição dos cards de prioridades escolares e configuração das dependências no catálogo do Gradle |
+| What the team changed manually | Refinamento do escopo do problema da Escola Estadual Cívico-Militar Maria de Lima Cadidé, vetorização e inclusão do brasão oficial, definição dos textos institucionais e execução de todos os testes no emulador |
+| How the result was validated | Compilação com `./gradlew assembleDebug`, teste funcional no emulador Pixel 8, conferência visual dos componentes e verificação de conformidade com os critérios de aceitação |
 
 ### Tool
-<!-- Guia: Qual ferramenta de IA foi utilizada? -->
-_[Informe a ferramenta utilizada]_
-<!-- Sugestão: Google Antigravity (Gemini). -->
+Google Antigravity (Gemini).
 
 ### Purpose
-<!-- Guia: Como a IA foi utilizada nesta Sprint? -->
-_[Descreva a finalidade do uso da IA]_
-<!-- Sugestão: Auxílio no diagnóstico de ambiente gráfico (Wayland/Flatpak), organização arquitetural em Jetpack Compose Material 3 e estruturação das especificações técnicas. -->
+Auxílio na estruturação técnica da especificação formal (SPEC-001), elaboração dos relatórios e apoio na organização da arquitetura em Jetpack Compose com Material Design 3.
 
 ### Generated Content
-<!-- Guia: O que foi gerado ou sugerido pela IA? -->
-_[Descreva o conteúdo gerado ou sugerido]_
-<!-- Sugestão: Sugestão da estrutura composable em WelcomeScreen.kt, definição dos cartões visuais de prioridade com Material Design 3 e configuração de dependências de ícones estendidos no catálogo do Gradle (libs.versions.toml). -->
+A IA foi utilizada como auxiliadora e guiadora nos documentos de especificação e do sprint, sugerindo a estrutura composable inicial em `WelcomeScreen.kt`, os cartões visuais de prioridade com Material Design 3 e catálogo de dependências.
 
 ### Human Changes
-<!-- Guia: O que foi revisado, corrigido ou modificado pelos alunos? -->
-_[Descreva o que foi alterado e refinado manualmente]_
-<!-- Sugestão: A equipe de alunos refinou o escopo institucional da Escola Estadual Cívico-Militar Maria de Lima Cadidé, definiu o brasão oficial a ser utilizado, ajustou as 4 faixas de prioridade e os textos explicativos dos diálogos modais, além de conduzir todos os testes e capturas de tela no dispositivo emulado. -->
+A equipe de alunos refinou o escopo institucional da Escola Estadual Cívico-Militar Maria de Lima Cadidé, definiu e importou o brasão oficial no drawable, ajustou as 4 faixas de prioridade e os textos explicativos dos diálogos modais, além de conduzir todos os testes e capturas de tela no dispositivo emulado.
 
 ### Validation
-<!-- Guia: Como a solução gerada foi testada e validada? -->
-_[Descreva como a solução foi validada contra a especificação]_
-<!-- Sugestão: A solução gerada foi compilada localmente com o Gradle e validada em tempo real no emulador Pixel 8 (Android 37.0), confirmando o cumprimento de 100% dos critérios da SPEC-001 e do SPRINT-01. -->
+A solução foi compilada localmente com o Gradle (`./gradlew assembleDebug`) e validada em tempo real no emulador Pixel 8 (Android API 35/37), confirmando o cumprimento integral dos critérios da SPEC-001 e do SPRINT-01.
 
 ---
 
 ## 9. Deliverables
-<!-- Guia: Lista oficial de artefatos que devem constar no Pull Request da Sprint 01. -->
 
 - `projects/team-05/app/` — Código-fonte do projeto Android
 - `projects/team-05/SPRINT-01.md` — Relatório da Sprint 01
 - `projects/team-05/docs/specs/SPEC-001.md` — Especificação da primeira tela
-- `projects/team-05/evidence/sprint-01/welcome-screen.png` — Evidência de execução
+- `projects/team-05/evidence/sprint-01/first-screen.png` — Evidência de execução (requisito do curso)
+- `projects/team-05/evidence/sprint-01/welcome-screen.png` — Evidência de execução complementar

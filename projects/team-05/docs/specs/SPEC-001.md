@@ -44,44 +44,93 @@ Desenvolver a interface gráfica da tela inicial de Login e Acesso do aplicativo
 
 - **AC-07 —** O projeto compila no Android Studio / Gradle sem erros e executa no emulador/dispositivo sem travamentos.
 
-## 6. Validation
+## 6. Requirement Traceability
 
-1. Compilar o projeto no Gradle;
-2. Executar no emulador AVD ou celular físico; 
-3. Digitar nos campos de E-mail e Senha;
-4. Testar o clique no botão 'Entrar', 'Sobre o SARC' e 'Solicitar Cadastro';
-5. Tirar screenshot e salvar em projects/team-05/evidence/sprint-01/welcome-screen.png.
+| Requirement | Implemented In | Acceptance Criterion | Evidence |
+| --- | --- | --- | --- |
+| FR-01 | `WelcomeScreen.kt` (Header Column, Image, Text) | AC-01 | `first-screen.png` |
+| FR-02 | `WelcomeScreen.kt` (OutlinedTextFields email e password) | AC-02 | `welcome-screen-interactive.png` |
+| FR-03 | `WelcomeScreen.kt` (Button "Entrar") | AC-03 | `first-screen.png` |
+| FR-04 | `WelcomeScreen.kt` (OutlinedButton "Sobre o SARC" + AlertDialog) | AC-04 | `welcome-screen-about-dialog.png` |
+| FR-05 | `WelcomeScreen.kt` (TextButton "Solicitar Cadastro" + AlertDialog) | AC-05 | `welcome-screen-register-dialog.png` |
 
-## 7. AI Usage
+---
+
+## 7. Validation Results
+
+| Acceptance Criterion | Result | Notes |
+| --- | --- | --- |
+| AC-01 | PASS | Cabeçalho visível com brasão oficial, título SARC, escola e slogan |
+| AC-02 | PASS | Campos de E-mail e Senha funcionais com digitação interativa e máscara de senha |
+| AC-03 | PASS | Botão 'Entrar' destacado com alto contraste e clique funcional |
+| AC-04 | PASS | Botão 'Sobre o SARC' abre modal com as 4 faixas de prioridade escolar |
+| AC-05 | PASS | Botão 'Solicitar Cadastro' visível e abre modal informativo |
+| AC-06 | PASS | Layout com rolagem suave, sem corte de componentes ou sobreposições |
+| AC-07 | PASS | Compilação com Gradle OK (`./gradlew assembleDebug`) e execução sem erros no emulador |
+
+### Environment Used for Validation
+
+- **Device:** Android Studio Emulator Pixel 8
+- **Android version / API:** API 35 / 37
+- **Build result:** PASS (`./gradlew assembleDebug` - BUILD SUCCESSFUL)
+- **Application execution:** PASS (Execução contínua sem crash)
+
+---
+
+## 8. Evidence
+
+- `projects/team-05/evidence/sprint-01/first-screen.png`
+- `projects/team-05/evidence/sprint-01/welcome-screen.png`
+- `projects/team-05/evidence/sprint-01/welcome-screen-interactive.png`
+- `projects/team-05/evidence/sprint-01/welcome-screen-about-dialog.png`
+- `projects/team-05/evidence/sprint-01/welcome-screen-register-dialog.png`
+
+---
+
+## 9. AI Usage
+
+### Summary Table
+
+| Item | Team response |
+| --- | --- |
+| LLM/tool used | Google Antigravity (Gemini) |
+| Task supported by the LLM | Estruturação formal da especificação SPEC-001 adaptada para tela de Login institucional |
+| Main suggestion received | Formulação técnica dos requisitos funcionais (FR-01 a FR-05) e critérios de aceitação mensuráveis (AC-01 a AC-07) |
+| What the team changed manually | Definição da interface de login, inclusão do botão de sobre/prioridades da Escola Cadidé e botão para solicitar cadastro |
+| How the result was validated | Validação visual e funcional dos requisitos no emulador Android Studio Pixel 8 |
 
 ### Tool
 Google Antigravity (Gemini).
 
 ### Purpose
-
 Foi usada como auxiliadora e orientadora na estruturação formal da especificação SPEC-001 adaptada para tela de Login institucional com botão informativo e botão de cadastro.
 
 ### Generated Content
-
 A IA sugeriu o rascunho estrutural da especificação formal (SPEC-001) com base no template oficial da disciplina, além de propor a formulação técnica dos requisitos funcionais (FR-01 a FR-05) e critérios de aceitação (AC-01 a AC-07) para a tela de login. A equipe ajustou e refinou os requisitos, definindo componentes Material 3 e os pontos de acesso aos botões informativos ("Sobre o SARC" em diálogo modal) e de novo acesso ("Solicitar Cadastro").
 
 ### Human Changes
-
 Definição e ideia da primeira tela ser a tela de Login com campos de E-mail e Senha, inclusão de botão informativo do SARC para os usuários saberem sobre o aplicativo e botão para solicitação de cadastro com aprovação da gestão escolar para inclusão de novos usuários e revisão e aprimoramento do rascunho estrutural da especificação formal (SPEC-001).
 
-## 8. Out of Scope
+---
+
+## 10. Out of Scope
 
 - A tela secundária de cadastro funcional, banco de dados Room/SQLite, validação de login no servidor remoto e painel administrativo do gestor.
 
-## 9. Deliverables
+---
+
+## 11. Deliverables
 
 - `projects/team-05/SPRINT-01.md` — Documento de Definição de Produto e objetivos da Sprint;
 - `projects/team-05/docs/specs/SPEC-001.md` — Arquivo de especificação formal da tela inicial;
 - `projects/team-05/app/` — Código-fonte da tela implementada em Kotlin e Jetpack Compose;
-- `projects/team-05/evidence/sprint-01/welcome-screen.png` — Screenshot da tela em execução.
+- `projects/team-05/evidence/sprint-01/first-screen.png` — Screenshot da tela em execução (padrão do curso);
+- `projects/team-05/evidence/sprint-01/welcome-screen.png` — Screenshot complementar da tela.
 
-## 10. Status
-<!-- Guia: Checklist de status de conclusão da especificação e da tela. -->
+---
+
+## 12. Status
+
 - [x] Specification completed
 - [x] Implementation completed
 - [x] Acceptance criteria validated
