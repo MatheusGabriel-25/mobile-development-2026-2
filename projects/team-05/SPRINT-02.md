@@ -13,64 +13,49 @@
 
 ## 1. Interaction Selection
 
-<!-- Guia: O professor exige a escolha de UMA interação significativa para o produto (ex: selecionar uma opção, alternar favorito, exibir/ocultar informação, incrementar quantidade, mudar filtro ou atualizar mensagem visível). Ela deve fazer sentido para o contexto do SARC da Escola Cadidé. -->
-
 ### Selected Feature
 
-<!-- Sugestão: Seleção Interativa de Nível de Prioridade do Acionamento (Níveis 1 a 4) com Feedback Visual e Instrução Operacional Dinâmica. -->
-_[Defina aqui o nome da funcionalidade de interação escolhida]_
+Modais Institucionais Interativos: Cartões Expansíveis de Prioridades e Guia de Cadastro em Etapas.
 
 ### Problem Solved
 
-<!-- Sugestão: Na rotina da Escola Cadidé, os professores precisam indicar com clareza a gravidade da situação antes de acionar a equipe. Ao interagir com a interface e selecionar um nível de prioridade, o usuário deve receber confirmação visual imediata do nível escolhido e uma orientação contextual rápida sobre o protocolo militar correspondente. -->
-_[Explique qual problema essa interação resolve para o usuário da escola]_
+Na rotina da Escola Estadual Cívico-Militar Maria de Lima Cadidé, os professores e a equipe gestora precisam de clareza imediata sobre os protocolos operacionais antes de acionar a equipe cívico-militar. Anteriormente, as informações nos diálogos eram estáticas, longas e causavam sobrecarga cognitiva. A introdução de estado reativo permite consultar os 4 níveis de prioridade sob demanda através de cartões expansíveis (com feedback visual de borda destacada e alternância de seta), além de orientar novos docentes através de um guia de credenciamento em 3 etapas com indicador visual de progresso.
 
 ### Meaningful Value for the Product
 
-<!-- Sugestão: Essa interação introduz o primeiro estado dinâmico do SARC, permitindo que a interface reaja à escolha do professor e prepare a carga de dados para o futuro despacho do chamado, evitando acionamentos incorretos. -->
-_[Explique por que essa interação agrega valor real ao SARC]_
+Essa interação introduz o primeiro gerenciamento de estado declarativo no SARC, proporcionando feedback visual imediato às ações do usuário e organizando o fluxo de informação institucional de forma didática, sem poluição visual ou navegação prematura entre telas.
 
 ---
 
 ## 2. State & Compose Architecture
 
-<!-- Guia: Explique qual variável de estado foi introduzida no Jetpack Compose, qual evento a modifica, e qual componente visual reage e é recomposto na tela. -->
-
 ### State Definition
 
-<!-- Sugestão:
-- Variável de estado: `selectedPriorityLevel` gerenciada via `remember { mutableStateOf<Int?>(null) }` (ou Boolean/Enum).
-- Tipo do estado: `Int?` (representando 1, 2, 3 ou 4) ou `PriorityLevel?`.
-- Valor inicial: `null` (nenhum selecionado) ou `1` (apoio padrão).
--->
-- **State variable:** _[Ex: selectedPriorityLevel]_
-- **State type:** _[Ex: Int? ou Boolean]_
-- **Initial value:** _[Ex: null ou false]_
-- **Compose mechanism:** `remember { mutableStateOf(...) }`
+- **State variable:** `expandedLevel` (no modal Sobre o SARC) e `registerStep` (no modal Solicitação de Cadastro)
+- **State type:** `Int?` (representando o nível aberto 1, 2, 3 ou 4; ou `null` se todos recolhidos) e `Int` (1, 2 ou 3)
+- **Initial value:** `null` (todos os cartões recolhidos inicialmente) e `1` (primeira etapa do guia)
+- **Compose mechanism:** `remember { mutableStateOf(...) }` declarado no escopo de composição de cada diálogo modal, garantindo que o estado reinicie a cada reabertura
 
 ### Event -> State -> UI Flow
 
-<!-- Guia: Valide o encadeamento obrigatório exigido pelo professor: Estado Inicial → Ação do Usuário → Atualização do Estado → Resposta Visível na UI. -->
-
 ```text
-[Estado Inicial: Nenhuma prioridade selecionada ou card em repouso]
+[Estado Inicial: Modal Sobre aberto, expandedLevel = null (todos os 4 cartões recolhidos)]
       ↓
-[Ação do Usuário: Clique em um dos cartões de prioridade (Nível 1, 2, 3 ou 4)]
+[Ação do Usuário: Toque no cartão de prioridade (ex: Nível 4 - Urgência Crítica)]
       ↓
-[Manipulador de Evento (onClick): Atualiza selectedPriorityLevel = novoNivel]
+[Manipulador de Evento (onClick): Atualiza expandedLevel = 4 (ou null se já estiver aberto)]
       ↓
-[Recomposição do Compose: O cartão selecionado ganha destaque visual e exibe mensagem orientadora]
+[Recomposição do Compose: O cartão selecionado expande sua descrição via AnimatedVisibility,
+ destaca sua borda com a cor da prioridade e altera a seta para ▲]
 ```
 
 ### Visual Feedback
 
-<!-- Guia: Descreva como a interface muda visualmente quando o estado é alterado. -->
-<!-- Sugestão:
-1. O cartão clicado recebe borda destacada com a cor da prioridade e ícone de seleção ativa.
-2. Os demais cartões retornam ao estado desmarcado.
-3. Surge na parte inferior um banner/card com as instruções de conduta para aquele nível de gravidade.
--->
-_[Descreva o que muda na tela após a ação do usuário]_
+1. O cartão tocado expande suavemente exibindo a descrição detalhada do protocolo operacional.
+2. A seta indicadora do cartão muda de ▼ (`KeyboardArrowDown`) para ▲ (`KeyboardArrowUp`).
+3. A borda do cartão ganha destaque de 2 dp na cor temática da prioridade.
+4. Caso outro cartão já estivesse expandido, ele é recolhido automaticamente (garantindo apenas um aberto por vez).
+5. No modal de cadastro, o toque em "Próximo" ou "Voltar" atualiza a barra `LinearProgressIndicator`, altera o contador "Etapa X de 3" e substitui a ação final por "Entendi".
 
 ---
 
@@ -93,24 +78,20 @@ _[Descreva o que muda na tela após a ação do usuário]_
 
 ## 4. Acceptance Criteria
 
-<!-- Guia: Critérios oficiais da Sprint 02 definidos pelo curso (AC-01 a AC-10). Marque com [x] conforme forem validados. -->
-
-- [ ] **AC-01** — A especificação técnica `SPEC-002.md` existe e está preenchida no diretório `docs/specs/`.
-- [ ] **AC-02** — Uma interação significativa para o produto SARC foi claramente definida.
-- [ ] **AC-03** — O código Compose contém pelo menos um valor de estado gerenciado por `remember` e `mutableStateOf`.
-- [ ] **AC-04** — Um evento disparado pelo usuário altera o valor do estado.
-- [ ] **AC-05** — A interface visual (UI) reage visivelmente à mudança do estado.
-- [ ] **AC-06** — O estado inicial e os estados atualizados comportam-se corretamente em múltiplos cliques.
-- [ ] **AC-07** — Todas as funcionalidades da Sprint 01 continuam operando sem quebras (sem regressão).
-- [ ] **AC-08** — O aplicativo compila e executa no emulador sem falhas ou travamentos (`crashes`).
-- [ ] **AC-09** — As evidências visuais de antes e depois da interação estão salvas em `evidence/sprint-02/`.
-- [ ] **AC-10** — A equipe compreende e sabe explicar o fluxo de estado `Evento → Estado → Recomposição UI`.
+- [x] **AC-01** — A especificação técnica `SPEC-002.md` existe e está preenchida no diretório `docs/specs/`.
+- [x] **AC-02** — Uma interação significativa para o produto SARC foi claramente definida.
+- [x] **AC-03** — O código Compose contém pelo menos um valor de estado gerenciado por `remember` e `mutableStateOf`.
+- [x] **AC-04** — Um evento disparado pelo usuário altera o valor do estado.
+- [x] **AC-05** — A interface visual (UI) reage visivelmente à mudança do estado.
+- [x] **AC-06** — O estado inicial e os estados atualizados comportam-se corretamente em múltiplos cliques.
+- [x] **AC-07** — Todas as funcionalidades da Sprint 01 continuam operando sem quebras (sem regressão).
+- [x] **AC-08** — O aplicativo compila e executa no emulador sem falhas ou travamentos (`crashes`).
+- [x] **AC-09** — As evidências visuais de antes e depois da interação estão salvas em `evidence/sprint-02/`.
+- [x] **AC-10** — A equipe compreende e sabe explicar o fluxo de estado `Evento → Estado → Recomposição UI`.
 
 ---
 
 ## 5. Regression Validation
-
-<!-- Guia: Confirme que as telas e recursos da Sprint 01 continuam íntegros após as mudanças da Sprint 02. -->
 
 1. **Campos de E-mail e Senha:** A digitação, a máscara protetora de senha e o botão de visibilidade continuam funcionando normalmente.
 2. **Diálogos Modais da Sprint 01:** Os botões "Sobre o SARC" e "Solicitar Cadastro" continuam abrindo e fechando seus respectivos modais sem erros.
@@ -120,55 +101,55 @@ _[Descreva o que muda na tela após a ação do usuário]_
 
 ## 6. Evidence
 
-<!-- Guia: Salve os prints obrigatórios em projects/team-05/evidence/sprint-02/ com os nomes padrão exigidos pelo professor: before-interaction.png e after-interaction.png. -->
-
 ### Before Interaction
 ![Before Interaction](evidence/sprint-02/before-interaction.png)
-*Figura 1: Estado inicial da interface antes da interação do usuário.*
+*Figura 1: Estado inicial do modal "Sobre o SARC" com os 4 cartões recolhidos.*
 
 ### After Interaction
 ![After Interaction](evidence/sprint-02/after-interaction.png)
-*Figura 2: Estado atualizado da interface após a ação do usuário, demonstrando a reação visual da UI.*
+*Figura 2: Estado atualizado após o toque no Nível 4, demonstrando a expansão da descrição, borda destacada e seta ▲.*
 
 ---
 
 ## 7. AI Usage
 
-<!-- Guia: Documente a utilização de ferramentas de inteligência artificial de acordo com as regras da disciplina. -->
-
 ### Tool
-Google Antigravity (Gemini).
+Google Antigravity (Gemini) e Claude Code.
 
 ### Purpose
-Auxílio no entendimento do paradigma de estado declarativo em Jetpack Compose (`remember`, `mutableStateOf`, recomposição), estruturação técnica dos documentos da Sprint 02 e sugestão de padrões limpos de manipulação de eventos.
+Auxílio no entendimento do paradigma de estado declarativo em Jetpack Compose (`remember`, `mutableStateOf`, recomposição), estruturação técnica dos documentos da Sprint 02, padronização de acessibilidade e captura automatizada de evidências via ADB.
 
 ### Generated Content
-_[Descreva o que a IA sugeriu ou estruturou para a Sprint 02]_
+A IA sugeriu estruturar a especificação técnica SPEC-002 detalhando os estados `expandedLevel` e `registerStep`, propôs a regra de alternância exclusiva (um cartão aberto por vez) e auxiliou na automação de validação visual no emulador.
 
 ### Human Changes
-_[Descreva o que a equipe de alunos revisou, adaptou e codificou manualmente]_
+A equipe de alunos selecionou o escopo exato para os modais existentes sem violar o escopo da Sprint 03 (sem adicionar rotas ou telas desnecessárias), ajustou a redação institucional voltada à Escola Cadidé e realizou a validação prática no emulador.
 
 ### Validation
-_[Descreva como a equipe testou a solução contra a especificação e no emulador Android Studio]_
+Compilação automatizada via Gradle (`./gradlew assembleDebug`), execução no emulador Android Studio Pixel 8 (API 37) e verificação dos critérios de aceitação AC-01 a AC-10.
 
 ### Tabela Síntese (Padrão Oficial do Curso)
 
 | Item | Team response |
 | --- | --- |
-| LLM/tool used | Google Antigravity (Gemini) |
-| Task supported by the LLM | Estruturação da SPEC-002, arquitetura do fluxo Evento → Estado → UI e documentação da Sprint 02 |
-| Main suggestion received | _[Ex: Padrão de estado com remember { mutableStateOf(...) } para seleção de prioridades]_ |
-| What the team changed manually | _[Ex: Implementação das regras contextuais da Escola Cadidé, estilização Material 3 e testes no emulador]_ |
+| LLM/tool used | Google Antigravity (Gemini) & Claude Code |
+| Task supported by the LLM | Estruturação da SPEC-002, arquitetura do fluxo Evento → Estado → UI e script de captura de evidências |
+| Main suggestion received | Implementação de `expandedLevel` com `remember { mutableStateOf<Int?>(null) }` e guia em 3 etapas com `LinearProgressIndicator` |
+| What the team changed manually | Refinamento das diretrizes da Escola Cadidé, paleta Material 3 do SARC e conferência no emulador |
 | How the result was validated | Compilação via Gradle (`./gradlew assembleDebug`) e validação dos critérios AC-01 a AC-10 no emulador Pixel 8 (API 37) |
 
 ---
 
 ## 8. Deliverables
 
-<!-- Guia: Lista oficial de artefatos que devem constar no Pull Request da Sprint 02. -->
-
 - `projects/team-05/app/` — Código-fonte do projeto Android com o estado implementado
 - `projects/team-05/SPRINT-02.md` — Relatório da Sprint 02
 - `projects/team-05/docs/specs/SPEC-002.md` — Especificação técnica da interação com estado
 - `projects/team-05/evidence/sprint-02/before-interaction.png` — Print do estado inicial (obrigatório)
 - `projects/team-05/evidence/sprint-02/after-interaction.png` — Print após a interação com resposta visual (obrigatório)
+- `projects/team-05/evidence/sprint-02/about-priority-switch.png` — Print de alternância de prioridade (bônus)
+- `projects/team-05/evidence/sprint-02/about-priority-collapsed-again.png` — Print de recolhimento completo (bônus)
+- `projects/team-05/evidence/sprint-02/initial-screen.png` — Print da tela inicial limpa (bônus)
+- `projects/team-05/evidence/sprint-02/register-guide-step-1.png` — Print da etapa 1 do guia de cadastro (bônus)
+- `projects/team-05/evidence/sprint-02/register-guide-step-2.png` — Print da etapa 2 do guia de cadastro (bônus)
+- `projects/team-05/evidence/sprint-02/register-guide-step-3.png` — Print da etapa 3 do guia de cadastro (bônus)
