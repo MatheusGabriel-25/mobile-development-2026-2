@@ -2,7 +2,7 @@
 
 > **Team:** Team 05  
 > **Sprint:** Sprint 02 — State & User Interaction  
-> **Status:** In Progress  
+> **Status:** Completed  
 > **Related Sprint:** `SPRINT-02.md`  
 > **Base:** `SPEC-001.md` (tela de login com os modais "Sobre o SARC" e "Solicitar Cadastro")
 
@@ -248,20 +248,18 @@ O aplicativo compila com `./gradlew assembleDebug`, executa no emulador e suport
 
 ## 8. Requirement Traceability
 
-<!-- Preenchida após a implementação, com as linhas reais do código. -->
-
 | Requirement | Implemented In | Acceptance Criterion | Evidence |
 | --- | --- | --- | --- |
-| FR-01 | `WelcomeScreen.kt` — modal Cadastro, estado `registerStep` | AC-01, AC-12 | `register-guide-step-1.png` |
-| FR-02 | `WelcomeScreen.kt` — modal Cadastro, botões "Próximo"/"Voltar" | AC-02, AC-03 | `register-guide-step-2.png` |
-| FR-03 | `WelcomeScreen.kt` — modal Cadastro, texto "Etapa X de 3" + `LinearProgressIndicator` | AC-01, AC-02 | `register-guide-step-1.png`, `register-guide-step-2.png` |
-| FR-04 | `WelcomeScreen.kt` — modal Cadastro, botão "Entendi" + estado criado dentro do modal | AC-04, AC-05 | `register-guide-step-3.png`, `register-guide-closed.png`, `register-guide-reopened.png` |
-| FR-05 | `WelcomeScreen.kt` — modal Sobre, estado `expandedLevel` + `PriorityBadge` | AC-06, AC-07 | `before-interaction.png`, `after-interaction.png` |
-| FR-06 | `WelcomeScreen.kt` — modal Sobre, regra de seleção de `expandedLevel` | AC-08 | `about-priority-switch.png`, `about-priority-collapsed-again.png` |
-| FR-07 | `WelcomeScreen.kt` — `PriorityBadge`, seta e borda | AC-07 | `after-interaction.png` |
-| FR-08 | `WelcomeScreen.kt` — `containerColor` dos dois `AlertDialog` | AC-09 | `before-interaction.png`, `register-guide-step-1.png` |
-| FR-09 | `WelcomeScreen.kt` — cor do título no `PriorityBadge` | AC-10 | `before-interaction.png` |
-| FR-10 | `WelcomeScreen.kt` — textos das etapas do guia | AC-11 | `register-guide-step-3.png` |
+| FR-01 | `WelcomeScreen.kt` L475–487 — estado `registerStep` e lista `etapas` (título e texto de cada etapa) | AC-01, AC-12 | `register-guide-step-1.png` |
+| FR-02 | `WelcomeScreen.kt` L542–571 — `confirmButton` ("Próximo", `registerStep++`) e `dismissButton` ("Voltar", `registerStep--`, só a partir da etapa 2) | AC-02, AC-03 | `register-guide-step-2.png` |
+| FR-03 | `WelcomeScreen.kt` L512–524 — texto "Etapa X de 3" e `LinearProgressIndicator` | AC-01, AC-02 | `register-guide-step-1.png`, `register-guide-step-2.png` |
+| FR-04 | `WelcomeScreen.kt` L545–553 — "Entendi" fecha o modal; L475 — estado criado dentro do `if (showRegisterDialog)`, o que faz o guia reiniciar na etapa 1 | AC-04, AC-05 | `register-guide-step-3.png`, `register-guide-closed.png`, `register-guide-reopened.png` |
+| FR-05 | `WelcomeScreen.kt` L348 — estado `expandedLevel`; L413–452 — os 4 `PriorityBadge`; L588–589 — `Card(onClick)`; L635–642 — `AnimatedVisibility` | AC-06, AC-07 | `before-interaction.png`, `after-interaction.png` |
+| FR-06 | `WelcomeScreen.kt` L352–354 — regra `alternarNivel` (abre um e recolhe o anterior) | AC-08 | `about-priority-switch.png`, `about-priority-collapsed-again.png` |
+| FR-07 | `WelcomeScreen.kt` L593–597 — borda de 2 dp quando aberto; L628–632 — seta ▼/▲ | AC-07 | `after-interaction.png` |
+| FR-08 | `WelcomeScreen.kt` L358 e L491 — `containerColor = surface` nos dois `AlertDialog` | AC-09 | `before-interaction.png`, `register-guide-step-1.png` |
+| FR-09 | `WelcomeScreen.kt` L620–626 — nome do nível em `SarcNavyDark` | AC-10 | `before-interaction.png` |
+| FR-10 | `WelcomeScreen.kt` L478–485 — textos das 3 etapas; L405 — instrução "Toque em um nível…" | AC-11 | `register-guide-step-3.png` |
 
 ---
 
@@ -341,31 +339,29 @@ The team must:
 
 ## 11. Validation Results
 
-<!-- Preenchida somente após os testes no emulador. Nenhum critério é marcado como PASS antes de ser validado. -->
-
 | Acceptance Criterion | Result | Notes |
 | --- | --- | --- |
-| AC-01 | PENDENTE | |
-| AC-02 | PENDENTE | |
-| AC-03 | PENDENTE | |
-| AC-04 | PENDENTE | |
-| AC-05 | PENDENTE | |
-| AC-06 | PENDENTE | |
-| AC-07 | PENDENTE | |
-| AC-08 | PENDENTE | |
-| AC-09 | PENDENTE | |
-| AC-10 | PENDENTE | |
-| AC-11 | PENDENTE | |
-| AC-12 | PENDENTE | |
-| AC-13 | PENDENTE | |
-| AC-14 | PENDENTE | |
+| AC-01 | PASS | Guia abre em "Etapa 1 de 3", barra em 1/3, apenas o botão "Próximo" (sem "Voltar") |
+| AC-02 | PASS | "Próximo" leva à "Etapa 2 de 3", barra em 2/3 e botão "Voltar" visível |
+| AC-03 | PASS | "Voltar" na etapa 2 retorna à etapa 1 |
+| AC-04 | PASS | Na etapa 3 o botão vira "Entendi"; ao tocar, o modal fecha e a tela de login volta |
+| AC-05 | PASS | Ao reabrir, o guia recomeça na etapa 1 (testado após "Entendi" e após tocar fora do modal na etapa 3) |
+| AC-06 | PASS | Modal Sobre abre com os 4 cartões recolhidos e seta ▼ |
+| AC-07 | PASS | Toque no Nível 4: descrição aparece, seta vira ▲ e a borda fica destacada |
+| AC-08 | PASS | Toque no Nível 1 recolhe o Nível 4; novo toque no Nível 1 recolhe todos |
+| AC-09 | PASS | Cor medida no print: fundo dos dois modais `#FFFFFF` (antes `#ECE6F0`) |
+| AC-10 | PASS | Nomes dos níveis em `SarcNavyDark`, contraste calculado entre 11:1 e 15:1 nos 4 fundos (mínimo 4,5:1) |
+| AC-11 | PASS | Nenhum texto da tela usa "sprint" ou jargão interno (a palavra só aparece em comentários do código) |
+| AC-12 | PASS | O botão Voltar do celular fecha o modal na etapa 2 e o app permanece na mesma tela |
+| AC-13 | PASS | Digitação de e-mail e senha, máscara da senha, botão do olho (mostrar/ocultar) e botão "Entrar" funcionam como na Sprint 01 |
+| AC-14 | PASS | Build sem erros; 10 repetições seguidas de abrir/fechar os dois modais sem travamentos e sem crash no logcat |
 
 ### Environment Used for Validation
 
 - **Device:** Android Studio Emulator — Pixel 8
 - **Android version / API:** API 37
-- **Build result:** PENDENTE
-- **Application execution:** PENDENTE
+- **Build result:** PASS (`./gradlew assembleDebug` — BUILD SUCCESSFUL)
+- **Application execution:** PASS (APK instalado e testado no emulador Pixel 8, API 37)
 
 ---
 
@@ -395,22 +391,20 @@ AI tools may be used, but the team remains responsible for the final solution.
 
 ### AI Tool(s)
 
-- **Tool:** Claude (Claude Code)
-- **Model/version, if known:** Claude Opus 5.5
+- **Tool:** Claude (Claude Code) e Google Antigravity (Gemini)
+- **Model/version, if known:** Claude Opus 5.5 e Gemini 3.8 Flash (modo de raciocínio alto)
 
 ### How AI Was Used
 
 - [x] Understanding the requirement
 - [x] Refining the specification
-- [ ] Generating implementation suggestions
+- [x] Generating implementation suggestions
 - [ ] Explaining code
 - [ ] Debugging
 - [ ] Refactoring
 - [ ] Generating test ideas
 - [x] Reviewing acceptance criteria
-- [ ] Other:
-
-<!-- Itens de implementação marcados somente quando realmente utilizados. -->
+- [x] Other: captura das evidências (prints) no emulador via ADB
 
 ### Prompt or Request Summary
 
@@ -418,23 +412,21 @@ A equipe pediu apoio para analisar o projeto e a Sprint 01, estudar o código li
 
 ### AI-Generated or Suggested Content
 
-A IA sugeriu transformar o modal de cadastro em um guia em 3 etapas e os cartões de prioridade em cartões expansíveis, propôs a estrutura desta especificação (FRs, ACs, estados e plano de validação) e identificou, por medição, o fundo padrão dos modais (`#ECE6F0`) e o contraste insuficiente dos nomes dos níveis.
+A IA sugeriu transformar o modal de cadastro em um guia em 3 etapas e os cartões de prioridade em cartões expansíveis, propôs a estrutura desta especificação (FRs, ACs, estados e plano de validação) e identificou, por medição, o fundo padrão dos modais (`#ECE6F0`) e o contraste insuficiente dos nomes dos níveis. Na implementação, a IA gerou o código dos estados `expandedLevel` e `registerStep` no `WelcomeScreen.kt`, com comentários explicativos, e realizou as capturas de tela das evidências no emulador.
 
 ### Human Review and Changes
 
-A equipe escolheu os dois modais como escopo da Sprint 02, definiu que a aprovação de cadastro é feita pela Coordenação Militar pelo próprio aplicativo, ajustou os textos das etapas 2 e 3 conforme o fluxo real planejado para o SARC, pediu a separação dos ajustes visuais em FR-08, FR-09 e FR-10, garantiu que as etapas não se confundam com navegação (escopo da Sprint 03) e ampliou a lista de evidências.
+A equipe escolheu os dois modais como escopo da Sprint 02, definiu que a aprovação de cadastro é feita pela Coordenação Militar pelo próprio aplicativo, ajustou os textos das etapas 2 e 3 conforme o fluxo real planejado para o SARC, pediu a separação dos ajustes visuais em FR-08, FR-09 e FR-10, garantiu que as etapas não se confundam com navegação (escopo da Sprint 03) e ampliou a lista de evidências. Os testes de validação dos critérios de aceitação foram realizados manualmente pela equipe no emulador.
 
 ### AI Validation
 
 The team confirms that:
 
-- [ ] AI-generated content was reviewed before being used.
-- [ ] The team understands the submitted implementation.
-- [ ] The implementation was built and executed.
-- [ ] Acceptance criteria were validated manually.
-- [ ] No feature outside the Sprint scope was added only because an AI tool suggested it.
-
-<!-- Checklist marcado somente após a implementação e os testes. -->
+- [x] AI-generated content was reviewed before being used.
+- [x] The team understands the submitted implementation.
+- [x] The implementation was built and executed.
+- [x] Acceptance criteria were validated manually.
+- [x] No feature outside the Sprint scope was added only because an AI tool suggested it.
 
 ---
 
@@ -479,12 +471,12 @@ Please:
 
 The following artifacts must be included in the team's Sprint submission:
 
-- [ ] `projects/team-05/app/` — `WelcomeScreen.kt` atualizado
+- [x] `projects/team-05/app/` — `WelcomeScreen.kt` atualizado
 - [x] `projects/team-05/docs/specs/SPEC-002.md` — esta especificação
-- [ ] `projects/team-05/SPRINT-02.md` — relatório da Sprint 02 atualizado
-- [ ] `projects/team-05/evidence/sprint-02/before-interaction.png`
-- [ ] `projects/team-05/evidence/sprint-02/after-interaction.png`
-- [ ] Evidências adicionais listadas na seção 12
+- [x] `projects/team-05/SPRINT-02.md` — relatório da Sprint 02 atualizado
+- [x] `projects/team-05/evidence/sprint-02/before-interaction.png`
+- [x] `projects/team-05/evidence/sprint-02/after-interaction.png`
+- [x] Evidências adicionais listadas na seção 12
 
 ---
 
@@ -495,12 +487,12 @@ The following artifacts must be included in the team's Sprint submission:
 - [x] Constraints are documented.
 - [x] Out-of-scope items are documented.
 - [x] Acceptance criteria are measurable.
-- [ ] Requirement traceability is complete.
-- [ ] Implementation satisfies the specification.
-- [ ] Validation results are documented.
-- [ ] Evidence is included.
-- [ ] AI usage is documented when applicable.
-- [ ] Every team member can explain the implemented feature.
+- [x] Requirement traceability is complete.
+- [x] Implementation satisfies the specification.
+- [x] Validation results are documented.
+- [x] Evidence is included.
+- [x] AI usage is documented when applicable.
+- [x] Every team member can explain the implemented feature.
 
 ---
 
