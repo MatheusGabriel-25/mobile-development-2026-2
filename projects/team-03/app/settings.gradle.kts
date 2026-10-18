@@ -22,6 +22,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "WiFiMapper"
+rootProject.name = "Wifi"
 include(":app")
- 

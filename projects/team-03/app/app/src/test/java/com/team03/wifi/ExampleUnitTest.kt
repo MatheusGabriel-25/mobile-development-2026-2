@@ -1,4 +1,4 @@
-package com.teamxx.teste
+package com.team03.wifi
 
 import org.junit.Test
 

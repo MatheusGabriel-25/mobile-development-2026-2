@@ -4,13 +4,13 @@ plugins {
 }
 
 android {
-    namespace = "com.teamxx.teste"
+    namespace = "com.team03.wifi"
     compileSdk {
         version = release(37)
     }
 
     defaultConfig {
-        applicationId = "com.teamxx.teste"
+        applicationId = "com.team03.wifi"
         minSdk = 24
         targetSdk = 37
         versionCode = 1
@@ -39,12 +39,13 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.core.ktx)
+    implementation("androidx.compose.material:material-icons-extended:1.7.8")
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation("androidx.navigation:navigation-compose:2.8.4")
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
