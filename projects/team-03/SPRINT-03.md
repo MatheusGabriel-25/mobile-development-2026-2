@@ -10,64 +10,65 @@
 
 ## 1. Telas Definidas
 
-Nesta Sprint 03, o **Wi-Fi Mapper** evoluiu de um aplicativo de tela única para uma arquitetura com múltiplas telas navegáveis:
+Nesta Sprint 03, o **Wiflux** evoluiu de um aplicativo de tela única para uma arquitetura com múltiplas telas navegáveis no pacote `com.team03.wifi`:
 
-- **HomeScreen (Rota `home`):** Tela principal de diagnóstico e verificação de sinal Wi-Fi (consolidada a partir das Sprints 01 e 02). Contém o cabeçalho oficial, o radar vetorial em Canvas com coordenadas e setor iluminado, o chip de status qualitativo, o botão de ação primária **"Iniciar Verificação"** e o botão condicional de navegação **"Ver Detalhes"**.
-- **DetailsScreen (Rota `details/{status}`):** Tela secundária focada no detalhamento técnico e orientador do resultado. Exibe o status da conexão, a intensidade numérica precisa em dBm, uma recomendação textual prática de usabilidade e o botão **"← Voltar"** para retornar ao painel principal.
+- **HomeScreen (`ROUTE_HOME = "home"`):** Tela principal de diagnóstico e verificação de sinal Wi-Fi (`HomeScreen.kt`). Contém o cabeçalho **Wiflux**, o dial vetorial em `Canvas` (`RadarView`) com 60 marcações e arco colorido proporcional ao nível em dBm, o chip de status qualitativo, o botão de ação primária **"▶ Iniciar Verificação"** e o botão condicional de navegação **"Ver Detalhes"**.
+- **DetailsScreen (`ROUTE_DETAILS = "details/{status}"`):** Tela secundária (`DetailsScreen.kt`) focada no detalhamento técnico e orientador do resultado. Exibe o título **"Detalhes da Verificação"**, um card com o **Status** da conexão, a **Intensidade** numérica em dBm (`DetailRow`) e uma **Recomendação** textual prática de usabilidade (`when (status)`), além do botão **"← Voltar"** para retornar ao painel principal.
 
 ---
 
 ## 2. Por que essas Duas Telas Existem
 
-A divisão entre **HomeScreen** e **DetailsScreen** atende diretamente à proposta de valor do **Wi-Fi Mapper**:
-- A **HomeScreen** prioriza a agilidade: o usuário precisa apenas abrir o app e tocar em um botão para ter uma resposta visual rápida (radar, cor e dBm) do sinal no cômodo.
-- A **DetailsScreen** fornece contexto adicional e orientações práticas de rede (como orientar o usuário se o sinal é adequado para reuniões ou se precisa de repetidor) sem poluir ou sobrecarregar visualmente a tela principal. O usuário acessa essas informações aprofundadas apenas quando desejar, por meio de uma ação intencional.
+A divisão entre **HomeScreen** e **DetailsScreen** atende diretamente à proposta de valor do **Wiflux**:
+- A **HomeScreen** prioriza a agilidade: o usuário realiza a verificação no cômodo e obtém uma resposta visual imediata (dial colorido, valor em dBm e classificação qualitativa).
+- A **DetailsScreen** fornece contexto adicional e orientações práticas de rede (como informar se o local é ótimo para trabalhar e fazer chamadas de vídeo ou se requer aproximar-se do roteador/usar repetidor) sem poluir visualmente a tela principal. O usuário acessa essas informações aprofundadas quando desejar, por meio do botão **"Ver Detalhes"**.
 
 ---
 
 ## 3. Rota que Conecta as Telas
 
-A transição entre as telas ocorre por meio da rota parametrizada:
-```text
-details/{status}
+A transição entre as telas ocorre por meio das constantes de rota definidas em `MainActivity.kt`:
+```kotlin
+private const val ROUTE_HOME = "home"
+private const val ROUTE_DETAILS = "details/{status}"
 ```
-Ao tocar em **"Ver Detalhes"**, a aplicação invoca:
+Ao tocar em **"Ver Detalhes"** na `HomeScreen`, o callback `onSeeDetails` é acionado e a `MainActivity` invoca:
 ```kotlin
 navController.navigate("details/${status.name}")
 ```
-O parâmetro `${status.name}` transporta a constante do enum (`STRONG`, `MEDIUM` ou `WEAK`) selecionada no sorteio da tela inicial. No destino, o argumento é lido pelo `NavBackStackEntry` e convertido com segurança via `SignalStatus.fromName(statusParam)`, garantindo que a tela de detalhes renderize exatamente os dados e a cor da verificação realizada.
+O parâmetro `${status.name}` transporta o nome da constante do enum (`STRONG`, `MEDIUM` ou `WEAK`) sorteada na tela inicial. No destino, o argumento tipado (`navArgument("status") { type = NavType.StringType }`) é recuperado do `backStackEntry` e convertido via `SignalStatus.valueOf(statusName)`, garantindo que a `DetailsScreen` renderize exatamente o status, o valor em dBm, a cor e a recomendação da verificação realizada.
 
 ---
 
 ## 4. Onde a Navegação é Disparada
 
-1. **Navegação para Frente (HomeScreen → DetailsScreen):**
-   - Disparada no evento `onClick` do botão **"Ver Detalhes"** em `HomeScreen.kt`.
-   - O botão é exibido somente após uma medição ativa (`status != SignalStatus.NONE`).
-   - O callback é transmitido para o `NavHost` em `MainActivity.kt`, que executa `navController.navigate(...)`.
+1. **Navegação para Frente (`HomeScreen` → `DetailsScreen`):**
+   - Disparada no evento `onClick = { onSeeDetails(signalStatus) }` do botão **"Ver Detalhes"** em `HomeScreen.kt`.
+   - O botão é exibido somente após uma medição ativa (`if (signalStatus != SignalStatus.NONE)`).
+   - O `NavHost` em `MainActivity.kt` executa `navController.navigate("details/${status.name}")`.
 
-2. **Navegação de Retorno (DetailsScreen → HomeScreen):**
-   - Disparada no evento `onClick` do botão **"← Voltar"** em `DetailsScreen.kt`.
-   - O componente raiz executa `navController.popBackStack()`, desempilhando a tela de detalhes.
-   - O botão físico ou gesto nativo de voltar do sistema Android também opera de maneira idêntica graças ao gerenciamento automático de pilha do `NavHost`.
+2. **Navegação de Retorno (`DetailsScreen` → `HomeScreen`):**
+   - Disparada no evento `onClick = onBack` do botão **"← Voltar"** em `DetailsScreen.kt`.
+   - O `NavHost` em `MainActivity.kt` executa `navController.popBackStack()`, desempilhando a tela de detalhes e restaurando a tela inicial.
+   - O botão físico ou gesto nativo de voltar do sistema Android também opera de maneira idêntica graças ao gerenciamento automático da pilha (*back stack*) pelo `NavHost`.
 
 ---
 
 ## 5. Validação do Retorno e Preservação de Estado
 
-O estado da medição de sinal é gerenciado no componente raiz `WifiMapperApp` através de:
+O estado da medição de sinal em `HomeScreen.kt` é preservado através de `rememberSaveable`:
 ```kotlin
 var signalStatus by rememberSaveable { mutableStateOf(SignalStatus.NONE) }
 ```
-Dessa forma, ao navegar para a `DetailsScreen` e posteriormente retornar à `HomeScreen` (seja pelo botão "Voltar" ou pelo gesto do sistema), o resultado da medição, a cor do setor do radar e o chip de status continuam exatamente iguais aos de antes da navegação, garantindo uma experiência contínua e sem perda de dados.
+Dessa forma, ao navegar para a `DetailsScreen` e posteriormente retornar à `HomeScreen` (seja pelo botão **"← Voltar"** ou pelo gesto do sistema), o resultado da medição (`-45 dBm`), o arco do dial e o chip de status (`"Sinal Forte"`) permanecem intactos, cumprindo os critérios de navegação e regressão.
 
 ---
 
 ## 6. Regressão e Continuidade das Sprints 01 e 02
 
-- **Sprint 01:** A identidade visual, o nome do produto (**Wi-Fi Mapper**), o slogan descritivo (*"Mapeie a rede. Conecte no melhor ponto."*) e a tipografia em Material Design 3 foram preservados.
-- **Sprint 02:** O gerenciamento reativo de estado, o sorteio entre os níveis de sinal, o radar vetorial desenhado em `Canvas` e o chip informativo continuam plenamente operacionais na `HomeScreen`.
-- **Modularização:** O código foi desmembrado de uma única `MainActivity.kt` para arquivos independentes (`SignalStatus.kt`, `HomeScreen.kt`, `DetailsScreen.kt` e `MainActivity.kt`), atendendo diretamente às diretrizes de boas práticas e arquitetura limpa solicitadas pelo professor.
+- **Sprint 01:** A identidade visual, o nome do produto (**Wiflux**), o subtítulo `SIGNAL DIAGNOSTICS`, o slogan descritivo (*"Mapeie a rede. Conecte no melhor ponto."*) e o botão primário foram preservados.
+- **Sprint 02:** O gerenciamento reativo de estado, o sorteio entre os níveis de sinal (`STRONG`, `MEDIUM`, `WEAK`), o dial vetorial desenhado em `Canvas` (`RadarView`) e o chip informativo continuam plenamente operacionais na `HomeScreen`.
+- **Modularização:** O código foi separado em arquivos independentes no pacote `com.team03.wifi` (`SignalStatus.kt`, `HomeScreen.kt`, `DetailsScreen.kt` e `MainActivity.kt`), atendendo diretamente às diretrizes de separação de UI em Composables solicitadas pelo professor.
 
 ---
 
@@ -76,30 +77,28 @@ Dessa forma, ao navegar para a `DetailsScreen` e posteriormente retornar à `Hom
 A especificação técnica completa encontra-se documentada em:
 - [`docs/specs/SPEC-003.md`](docs/specs/SPEC-003.md)
 
-| Requisito Funcional | Critério de Aceitação | Implementação | Validação |
+| Requisito Funcional | Critério de Aceitação | Implementação (`com.team03.wifi`) | Validação |
 | :--- | :--- | :--- | :--- |
-| **FR-01** (Botão "Ver Detalhes" condicional) | **AC-02, AC-07** | `if (status != SignalStatus.NONE)` em `HomeScreen.kt` | Validado visualmente na `HomeScreen` |
-| **FR-02** (Navegação com parâmetro de rota) | **AC-03, AC-04** | `navController.navigate("details/${status.name}")` | Validado na transição de tela |
-| **FR-03** (Exibição de diagnóstico completo) | **AC-05** | Card com status, dBm e recomendação em `DetailsScreen.kt` | Validado na `DetailsScreen` |
-| **FR-04** (Botão de retorno à tela inicial) | **AC-06, AC-07** | `navController.popBackStack()` em `DetailsScreen.kt` | Validado no retorno com estado mantido |
+| **FR-01** (Botão "Ver Detalhes" condicional) | **AC-02, AC-07** | `if (signalStatus != SignalStatus.NONE)` em `HomeScreen.kt` | Validado em `evidence/sprint-03/screen-a.png` |
+| **FR-02** (Navegação com parâmetro de rota) | **AC-03, AC-04** | `navController.navigate("details/${status.name}")` em `MainActivity.kt` | Validado na transição `HomeScreen` → `DetailsScreen` |
+| **FR-03** (Exibição de diagnóstico completo) | **AC-05** | Card com `DetailRow` e `recommendation` em `DetailsScreen.kt` | Validado em `evidence/sprint-03/screen-b.png` |
+| **FR-04** (Botão de retorno à tela inicial) | **AC-06, AC-07** | `navController.popBackStack()` em `MainActivity.kt` / `DetailsScreen.kt` | Validado no retorno com estado mantido |
 
 ---
 
 ## 8. Evidências de Validação
 
-As evidências foram organizadas na pasta oficial da Sprint conforme a estrutura exigida:
+As evidências em alta resolução foram organizadas na pasta oficial da Sprint (`evidence/sprint-03/`) conforme a estrutura exigida pelo professor:
 
-### 1. HomeScreen com Verificação Realizada (`screen-a.png`)
-Exibição do radar iluminado, valor em dBm, chip de status e o botão **"Ver Detalhes"** habilitado:
+### 1. Tela A — `HomeScreen` com Verificação Realizada (`screen-a.png`)
+Exibição do dial iluminado (`-45 dBm`), chip de status (`"Sinal Forte"`) e o botão **"Ver Detalhes"** habilitado:
+
 ![HomeScreen](evidence/sprint-03/screen-a.png)
 
-### 2. DetailsScreen com Diagnóstico Completo (`screen-b.png`)
-Exibição do card detalhado contendo Status, Intensidade, Recomendação textual e o botão **"← Voltar"**:
-![DetailsScreen](evidence/sprint-03/screen-b.png)
+### 2. Tela B — `DetailsScreen` com Diagnóstico Completo (`screen-b.png`)
+Exibição do card detalhado contendo Status (`Sinal Forte`), Intensidade (`-45 dBm`), Recomendação textual (*"Ótimo local para trabalhar ou fazer chamadas de vídeo."*) e o botão **"← Voltar"**:
 
-### 3. Retorno à Tela Inicial com Estado Mantido (`back-preserved.png`)
-Retorno após o acionamento do botão "Voltar", confirmando que os dados do radar e do sinal permanecem preservados:
-![Retorno](evidence/sprint-03/back-preserved.png)
+![DetailsScreen](evidence/sprint-03/screen-b.png)
 
 ---
 
@@ -107,13 +106,13 @@ Retorno após o acionamento do botão "Voltar", confirmando que os dados do rada
 
 Em conformidade com a política de integridade da disciplina:
 
-| Item | Resposta da Equipe |
+| Item | Team response |
 | :--- | :--- |
-| **LLM / Ferramenta Utilizada** | Antigravity AI / Claude & Gemini |
-| **Tarefa Apoiada pela LLM** | Auxílio na refatoração e divisão modular dos componentes Compose (`HomeScreen.kt` e `DetailsScreen.kt`), estruturação da rota parametrizada no `NavHost` e alinhamento do template formal da `SPEC-003`. |
-| **Principal Sugestão Recebida** | Utilizar passagem de parâmetro via rota (`details/{status}`) associada ao `rememberSaveable` no componente raiz, evitando duplicar o estado da medição entre telas. |
-| **O que a Equipe Alterou Manualmente** | Desenvolvimento das composables no Jetpack Compose, ajuste fino do design visual escuro, definição das recomendações amigáveis de texto e testes no emulador Android. |
-| **Como o Resultado foi Validado** | Compilação via Gradle (`assembleDebug`), testes interativos de navegação (ida e volta) no emulador Android e inspeção do back stack. |
+| **LLM/tool used** | Claude & Gemini (Antigravity) |
+| **Task supported by the LLM** | Auxílio na separação modular dos componentes Compose (`HomeScreen.kt`, `DetailsScreen.kt`, `SignalStatus.kt`), configuração da rota parametrizada `details/{status}` com `navArgument` no `NavHost` e revisão da `SPEC-003.md`. |
+| **Main suggestion received** | Utilizar passagem de argumento na rota (`details/${status.name}`) com `rememberNavController()` e `rememberSaveable` para manter o estado da verificação ao retornar via `popBackStack()`. |
+| **What the team changed manually** | Implementação das telas `HomeScreen` e `DetailsScreen` no pacote `com.team03.wifi`, definição das recomendações práticas em português para cada faixa de sinal e validação manual no emulador Android. |
+| **How the result was validated** | Compilação via Gradle (`./gradlew assembleDebug` com `BUILD SUCCESSFUL`), execução no emulador Android validando o fluxo `Launch → HomeScreen → Iniciar Verificação → Ver Detalhes → DetailsScreen → Voltar → HomeScreen` e captura das evidências `screen-a.png` e `screen-b.png`. |
 
 ---
 
@@ -123,11 +122,11 @@ Em conformidade com a política de integridade da disciplina:
 - [x] **AC-02** — Existem pelo menos duas telas com responsabilidades claras (`HomeScreen` e `DetailsScreen`).
 - [x] **AC-03** — O Navigation Compose (`NavHost` e `NavController`) foi implementado com sucesso.
 - [x] **AC-04** — Ação do usuário no botão "Ver Detalhes" navega para a tela de destino.
-- [x] **AC-05** — O conteúdo da tela de detalhes reflete o status obtido na medição inicial.
-- [x] **AC-06** — O botão "Voltar" e o gesto do sistema retornam à tela inicial corretamente.
-- [x] **AC-07** — Funcionalidades das Sprints 01 e 02 (radar, chip, botões) permanecem operacionais e o estado é preservado.
+- [x] **AC-05** — O conteúdo da tela de detalhes reflete o status obtido na medição inicial (`-45 dBm` / `Sinal Forte`).
+- [x] **AC-06** — O botão "← Voltar" e o gesto do sistema retornam à tela inicial corretamente.
+- [x] **AC-07** — Funcionalidades das Sprints 01 e 02 (dial, chip, verificação reativa) permanecem operacionais e o estado é preservado.
 - [x] **AC-08** — O aplicativo compila e executa sem falhas ou crashes (`BUILD SUCCESSFUL`).
-- [x] **AC-09** — Evidências visuais salvas na pasta `evidence/sprint-03/`.
+- [x] **AC-09** — Evidências visuais (`screen-a.png` e `screen-b.png`) salvas na pasta `evidence/sprint-03/`.
 - [x] **AC-10** — A equipe compreende e está apta a explicar todo o grafo e ciclo de navegação.
 
 ---
@@ -148,10 +147,10 @@ Em conformidade com a política de integridade da disciplina:
 ## 12. Checklist de Definição de Pronto (Definition of Done)
 
 - [x] `SPEC-003.md` completa e consistente.
-- [x] Pelo menos duas telas navegáveis implementadas.
+- [x] Pelo menos duas telas navegáveis implementadas (`HomeScreen` e `DetailsScreen`).
 - [x] Navegação de ida e volta operando com integridade de estado.
 - [x] Funcionalidades anteriores (Sprints 01 e 02) preservadas sem regressão.
-- [x] Aplicação compilada com sucesso no Gradle.
-- [x] Evidências salvas em `projects/team-03/evidence/sprint-03/`.
+- [x] Aplicação compilada com sucesso no Gradle (`BUILD SUCCESSFUL`).
+- [x] Evidências salvas em `projects/team-03/evidence/sprint-03/screen-a.png` e `screen-b.png`.
 - [x] Relatório da Sprint completo com documentação do uso de IA.
 - [x] Equipe pronta para apresentar e explicar o código ao professor.
