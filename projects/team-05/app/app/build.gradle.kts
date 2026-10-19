@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)      // Anotação @Preview (pré-visualizar a tela no Android Studio).
     implementation(libs.androidx.core.ktx)                        // Atalhos Kotlin para o Android (inclui o enableEdgeToEdge).
     implementation(libs.androidx.lifecycle.runtime.ktx)           // Ciclo de vida da tela (quando abre, pausa, fecha).
+    implementation(libs.androidx.navigation.compose)              // Navegação entre telas: NavHost e NavController (Sprint 03).
     testImplementation(libs.junit)                                // Testes de unidade no computador.
     androidTestImplementation(platform(libs.androidx.compose.bom)) // Mesmas versões do Compose para os testes.
     androidTestImplementation(libs.androidx.compose.ui.test.junit4) // Testes de tela do Compose no emulador.
