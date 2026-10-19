@@ -2,7 +2,7 @@
 
 > **Team:** Team 05  
 > **Sprint:** Sprint 03 — Navigation & Multiple Screens  
-> **Status:** Draft  
+> **Status:** Validated  
 > **Related Sprint:** `SPRINT-03.md`  
 > **Base:** `SPEC-001.md` (tela de login) e `SPEC-002.md` (modais interativos)
 
@@ -40,10 +40,6 @@ O objetivo desta funcionalidade é transformar o SARC em um aplicativo de **duas
 **When** ele toca em **"Sair"**,  
 **Then** o aplicativo volta para a tela de Login.
 
-**Given** que o professor está no Painel do Docente,  
-**When** ele usa o **botão voltar do Android**,  
-**Then** o aplicativo é fechado e o celular mostra a tela inicial, como em um app de verdade.
-
 ---
 
 ## 4. Functional Requirements
@@ -72,10 +68,9 @@ O Painel do Docente deve exibir a seção **"Meus acionamentos"** **sem nenhum i
 
 Ao tocar em **"Novo acionamento"**, o aplicativo deve abrir um aviso com o texto **"O formulário de acionamento chega na Sprint 04"**, que fecha ao toque em um botão.
 
-### FR-07 — Sair volta ao Login; voltar do Android sai do app
+### FR-07 — Sair volta ao Login
 
-- Ao tocar em **"Sair"**, o aplicativo deve voltar à tela de Login.
-- Ao usar o **botão voltar do Android** no Painel do Docente, o aplicativo deve **fechar** e mostrar a tela inicial do celular. Ele **não** volta ao Login.
+Ao tocar em **"Sair"** no Painel do Docente, o aplicativo deve voltar à tela de Login.
 
 ---
 
@@ -92,7 +87,7 @@ Ao tocar em **"Novo acionamento"**, o aplicativo deve abrir um aviso com o texto
 
 - `minSdk = 24`, `compileSdk = 37` e `targetSdk = 37` permanecem iguais.
 - A navegação usa **apenas** `NavHost`, `NavController` e `composable(...)` com as rotas `welcome` e `home`.
-- Ao entrar, a rota `welcome` sai da pilha de telas (`popUpTo`); ao sair, a rota `home` sai da pilha. É isso que faz o voltar do Android fechar o app no painel.
+- Ao entrar, a rota `home` é colocada por cima do Login na pilha de telas; ao sair, `popBackStack()` tira o painel da pilha e o Login volta a aparecer.
 - Cada tela fica em **arquivo próprio**: `WelcomeScreen.kt` (já existe) e `HomeDocenteScreen.kt` (novo).
 - O estado do aviso "Novo acionamento" usa `remember { mutableStateOf(...) }`, como na Sprint 02.
 
@@ -142,8 +137,8 @@ Ao tocar em **"Novo acionamento"**, o aplicativo deve abrir um aviso com o texto
 ### AC-06 — Aviso do novo acionamento
 **Given** o Painel do Docente aberto, **When** o professor toca em "Novo acionamento", **Then** o aviso "O formulário de acionamento chega na Sprint 04" aparece e fecha ao toque no botão do aviso.
 
-### AC-07 — Sair e voltar do Android
-**Given** o Painel do Docente aberto, **When** o professor toca em "Sair", **Then** o Login é exibido; e **When** ele usa o voltar do Android no painel, **Then** o app fecha e a tela inicial do celular aparece.
+### AC-07 — Sair
+**Given** o Painel do Docente aberto, **When** o professor toca em "Sair", **Then** a tela de Login é exibida.
 
 ### AC-08 — Não-regressão da Sprint 02
 **Given** a tela de Login, **When** o professor abre "Sobre o SARC" e "Solicitar Cadastro", **Then** os modais funcionam como na Sprint 02 (cartões expansíveis e guia de 3 etapas).
@@ -158,17 +153,15 @@ Ao tocar em **"Novo acionamento"**, o aplicativo deve abrir um aviso com o texto
 
 ## 8. Requirement Traceability
 
-*(preenchida depois do código, com as linhas reais)*
-
 | Requirement | Implementação | AC | Evidência |
 | --- | --- | --- | --- |
-| FR-01 | `MainActivity.kt` — `NavHost` | AC-01 | `screen-a.png` |
-| FR-02 | `MainActivity.kt` — `onLoginClick` navega | AC-02 | `screen-a.png`, `screen-b.png` |
-| FR-03 | `HomeDocenteScreen.kt` | AC-03 | `screen-b.png` |
-| FR-04 | `HomeDocenteScreen.kt` | AC-04, AC-10 | `screen-b.png` |
-| FR-05 | `HomeDocenteScreen.kt` | AC-05 | `screen-b.png` |
-| FR-06 | `HomeDocenteScreen.kt` | AC-06 | `home-aviso.png` |
-| FR-07 | `MainActivity.kt` + `HomeDocenteScreen.kt` | AC-07 | `home-sair.png` |
+| FR-01 | `MainActivity.kt` L48 — `rememberNavController()`; L51 — `NavHost(startDestination = "welcome")`; L54 e L62 — `composable("welcome")` e `composable("home")` | AC-01 | `screen-a.png` |
+| FR-02 | `MainActivity.kt` L57 — `onLoginClick` chama `navController.navigate("home")` | AC-02 | `screen-a.png`, `screen-b.png` |
+| FR-03 | `HomeDocenteScreen.kt` L69–76 — título e subtítulo | AC-03 | `screen-b.png` |
+| FR-04 | `HomeDocenteScreen.kt` L86–91 — 4 chamadas de `NivelLegenda`; L125 — função `NivelLegenda` (bolinha na cor do nível + nome em `SarcNavyDark`) | AC-04, AC-10 | `screen-b.png` |
+| FR-05 | `HomeDocenteScreen.kt` L93–95 — "Meus acionamentos" e "Nenhum acionamento ainda" | AC-05 | `screen-b.png` |
+| FR-06 | `HomeDocenteScreen.kt` L60 — estado `showAviso`; L78–84 — botão "Novo acionamento"; L108–117 — `AlertDialog` com "Entendi" | AC-06 | `home-aviso.png` |
+| FR-07 | `HomeDocenteScreen.kt` L99–105 — botão "Sair"; `MainActivity.kt` L65 — `onSair` chama `navController.popBackStack()` | AC-07 | `home-sair.png` |
 
 ---
 
@@ -178,17 +171,16 @@ Ao tocar em **"Novo acionamento"**, o aplicativo deve abrir um aviso com o texto
 
 1. **`libs.versions.toml` e `app/build.gradle.kts`:** adicionar `navigation-compose`.
 2. **`MainActivity.kt`:** criar o `NavController` (`rememberNavController()`) e o `NavHost(startDestination = "welcome")`.
-   - `composable("welcome")` → `WelcomeScreen(onLoginClick = { _, _ -> navController.navigate("home") { popUpTo("welcome") { inclusive = true } } })`
-   - `composable("home")` → `HomeDocenteScreen(onSair = { navController.navigate("welcome") { popUpTo("home") { inclusive = true } } })`
+   - `composable("welcome")` → `WelcomeScreen(onLoginClick = { _, _ -> navController.navigate("home") })`
+   - `composable("home")` → `HomeDocenteScreen(onSair = { navController.popBackStack() })`
 3. **`HomeDocenteScreen.kt` (novo):** título e subtítulo, botão "Novo acionamento" com aviso, legenda dos 4 níveis, seção "Meus acionamentos" vazia e botão "Sair".
 
 ### Expected Interaction Flow
 
 ```text
 Abrir o app → [welcome]
-   → "Entrar" → navigate("home") com popUpTo("welcome") → [home]  (pilha: só home)
-[home] → "Sair"          → navigate("welcome") com popUpTo("home") → [welcome]
-[home] → voltar Android  → pilha tem 1 tela → o app fecha → tela inicial do celular
+   → "Entrar" → navigate("home") → [welcome, home]  (o painel fica por cima do Login)
+[home] → "Sair" → popBackStack() → [welcome]
 [home] → "Novo acionamento" → showAviso = true → aviso → botão fecha → showAviso = false
 ```
 
@@ -205,31 +197,111 @@ Os estados da Sprint 01 e da Sprint 02 permanecem sem alteração.
 
 ## 10. Validation Plan
 
-*(a executar depois do código)*
+The team must:
 
 1. Compilar com `./gradlew assembleDebug`.
 2. Rodar no emulador Pixel 8 (API 37).
-3. Fluxo: abrir → Login → "Entrar" → Painel → "Sair" → Login (`screen-a.png`, `screen-b.png`).
-4. No Painel, usar o voltar do Android e confirmar que o app fecha.
-5. Tocar em "Novo acionamento" e conferir o aviso.
-6. Abrir os dois modais do Login e conferir que a Sprint 02 continua igual.
-7. Repetir Entrar → Sair 10 vezes sem travar.
+3. Fluxo: abrir → Login → "Entrar" → Painel (`screen-a.png`, `screen-b.png`).
+4. No Painel, tocar em "Sair" e confirmar que o Login aparece (`home-sair.png`).
+5. Tocar em "Novo acionamento" e conferir o aviso (`home-aviso.png`).
+6. Abrir os dois modais do Login e conferir que a Sprint 02 continua igual (`sprint-02-regression.png`).
+7. Repetir Entrar → Sair 10 vezes e conferir o logcat (sem `FATAL EXCEPTION`).
+
+---
 
 ## 11. Validation Results
 
-*(PASS só do que for testado)*
+| AC | Resultado | Como foi verificado |
+| --- | --- | --- |
+| AC-01 | PASS | Código: `NavHost` com as rotas `welcome` e `home`; ao abrir o app, a primeira tela é o Login |
+| AC-02 | PASS | Toque em "Entrar" com os campos vazios → Painel do Docente exibido |
+| AC-03 | PASS | "Painel do Docente" e "Acione a Coordenação em poucos toques" visíveis |
+| AC-04 | PASS | Os 4 níveis aparecem, cada um com bolinha na cor do nível |
+| AC-05 | PASS | "Meus acionamentos" mostra "Nenhum acionamento ainda", sem itens |
+| AC-06 | PASS | "Novo acionamento" abre o aviso "O formulário de acionamento chega na Sprint 04"; "Entendi" fecha o aviso |
+| AC-07 | PASS | "Sair" no Painel → tela de Login exibida |
+| AC-08 | PASS | Modal "Sobre o SARC": cartão do Nível 4 expande com a descrição; modal de cadastro: "Etapa 1 de 3" → "Próximo" → "Etapa 2 de 3" com "Voltar" |
+| AC-09 | PASS | `./gradlew assembleDebug` — BUILD SUCCESSFUL; 10 ciclos Entrar → Sair seguidos; 0 `FATAL EXCEPTION` no logcat |
+| AC-10 | PASS | Cores vindas do tema (`PriorityGreen`, `PriorityYellow`, `PriorityOrange`, `PriorityRed`); nomes em `SarcNavyDark` (`#0F2042`) sobre o fundo `#F8F9FA`, contraste ≈ 15:1 |
+
+### Environment Used for Validation
+
+- **Device:** Android Studio Emulator — Pixel 8
+- **Android version / API:** API 37
+- **Build result:** PASS (`./gradlew assembleDebug` — BUILD SUCCESSFUL)
+- **Application execution:** PASS (APK instalado e testado no emulador Pixel 8, API 37)
+
+---
 
 ## 12. Evidence
 
-Em `projects/team-05/evidence/sprint-03/`: `screen-a.png` (Login), `screen-b.png` (Painel), `home-aviso.png`, `home-sair.png`, e um print dos modais da Sprint 02.
+Em `projects/team-05/evidence/sprint-03/`:
+
+| Arquivo | O que mostra | Prova |
+| --- | --- | --- |
+| **`screen-a.png`** (obrigatório) | tela de Login (rota `welcome`) | tela de origem |
+| **`screen-b.png`** (obrigatório) | Painel do Docente (rota `home`) | tela de destino e seu conteúdo |
+| `home-aviso.png` | aviso de "Novo acionamento" aberto | FR-06 |
+| `home-sair.png` | Login exibido depois de tocar em "Sair" | FR-07 (volta) |
+| `sprint-02-regression.png` | modal "Sobre o SARC" com o Nível 4 aberto | não-regressão da Sprint 02 |
+
+---
 
 ## 13. AI-Assisted Development
 
-- **Tool:** Claude (Claude Code).
-- **How AI Was Used:** entender a Sprint, refinar a SPEC e sugerir o `NavHost`.
-- **Human Review and Changes:** o Matheus definiu o escopo (só a Home do Docente), decidiu que o voltar do Android fecha o app e que a lista de acionamentos fica vazia.
-- *(restante preenchido no fim da Sprint)*
+AI tools may be used, but the team remains responsible for the final solution.
 
-## 16. Specification Status
+### AI Tool(s)
 
-Draft — aprovada pelo Matheus para iniciar a Sprint 03.
+- **Tool:** Claude (Claude Code)
+- **Model/version, if known:** Claude Opus 5.5 e Claude Sonnet 5.5
+
+### How AI Was Used
+
+- [x] Understanding the requirement
+- [x] Refining the specification
+- [x] Generating implementation suggestions
+- [x] Explaining code
+- [ ] Debugging
+- [ ] Refactoring
+- [ ] Generating test ideas
+- [x] Reviewing acceptance criteria
+- [x] Other: instalação do ambiente (Android Studio, SDK e emulador) e captura das evidências via ADB
+
+### Prompt or Request Summary
+
+A equipe pediu apoio para ler o `SPRINT-03.md` do curso, montar a SPEC-003 a partir das decisões já tomadas no planejamento e implementar a navegação Login → Painel do Docente com o mínimo de código.
+
+### AI-Generated or Suggested Content
+
+A IA propôs a estrutura desta especificação, o `NavHost` com as rotas `welcome` e `home`, a nova tela `HomeDocenteScreen.kt` e o plano de validação. Na primeira versão, sugeriu tirar o Login da pilha (`popUpTo`) para que o voltar do Android fechasse o app.
+
+### Human Review and Changes
+
+O Matheus definiu o escopo (só o Painel do Docente, sem formulário nem banco), escolheu o título, o aviso de "Novo acionamento" e a lista vazia. Ao testar no emulador, rejeitou o comportamento do `popUpTo` (o app fechava e, ao reabrir, não voltava ao painel) e pediu a versão mais simples: só o botão "Sair" volta ao Login, com `popBackStack()`. Também pediu código no nível MVP, sem enfeites.
+
+### AI Validation
+
+The team confirms that:
+
+- [x] AI-generated content was reviewed before being used.
+- [x] The team understands the submitted implementation.
+- [x] The implementation was built and executed.
+- [x] Acceptance criteria were validated manually.
+- [x] No feature outside the Sprint scope was added only because an AI tool suggested it.
+
+---
+
+## 14. Deliverables
+
+- `projects/team-05/app/`
+- `projects/team-05/SPRINT-03.md`
+- `projects/team-05/docs/specs/SPEC-003.md`
+- `projects/team-05/evidence/sprint-03/screen-a.png`
+- `projects/team-05/evidence/sprint-03/screen-b.png`
+
+---
+
+## 15. Specification Status
+
+Validated — FR-01 a FR-07 implementados; AC-01 a AC-10 em PASS no emulador Pixel 8 (API 37).
