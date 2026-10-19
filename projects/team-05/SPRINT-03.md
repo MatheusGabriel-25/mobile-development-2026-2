@@ -136,10 +136,10 @@ Os critérios da própria SPEC-003 (AC-01 a AC-10) estão na seção 11 da SPEC,
 | Item | Team response |
 | --- | --- |
 | LLM/tool used | Claude (Claude Code) — Claude Opus 5.5 e Claude Sonnet 5.5 |
-| Task supported by the LLM | Ler o `SPRINT-03.md`, montar a SPEC-003, sugerir o `NavHost` e a nova tela, instalar o ambiente e capturar as evidências |
+| Task supported by the LLM | Conversar com a equipe para definir as telas, escrever a SPEC-003 a partir do que foi decidido, sugerir o `NavHost` e a nova tela, instalar o ambiente e capturar as evidências |
 | Main suggestion received | `NavHost` com as rotas `welcome` e `home`, e uma tela nova em arquivo próprio. A primeira versão usava `popUpTo` para o voltar do Android fechar o app |
-| What the team changed manually | Escolhemos o escopo (só o painel, código no nível MVP), os textos e a lista vazia. Testando no emulador, rejeitamos o `popUpTo` e ficamos com a versão mais simples: só "Sair" volta ao Login, com `popBackStack()` |
-| How the result was validated | `./gradlew assembleDebug`, teste manual de cada AC no emulador Pixel 8 (API 37), 10 ciclos Entrar → Sair e logcat sem crash |
+| What the team changed manually | O Matheus propôs o fluxo e as telas com base no protocolo de acionamento do Paulo e no `SPRINT-01.md`, e foi decidindo cada ponto com a IA: escopo (só o painel, código no nível MVP), textos, aviso do botão, lista vazia e legenda dos níveis. Ao testar no emulador, rejeitou o `popUpTo` e ficou com a versão mais simples: só "Sair" volta ao Login, com `popBackStack()` |
+| How the result was validated | `./gradlew assembleDebug`, teste manual de cada AC no emulador Pixel 8 (API 37), 10 ciclos Entrar → Sair e logcat sem crash. Nesta Sprint a IA avançou o código, os testes e o relatório em sequência; o Matheus revisou e validou depois, e estuda o código para poder explicá-lo |
 
 ---
 

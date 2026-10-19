@@ -270,7 +270,7 @@ AI tools may be used, but the team remains responsible for the final solution.
 
 ### Prompt or Request Summary
 
-A equipe pediu apoio para ler o `SPRINT-03.md` do curso, montar a SPEC-003 a partir das decisões já tomadas no planejamento e implementar a navegação Login → Painel do Docente com o mínimo de código.
+A equipe conversou com a IA para ler o `SPRINT-03.md` do curso e definir as telas, com base no protocolo de acionamento do Paulo e no `SPRINT-01.md`. A SPEC-003 foi montada em conjunto, a partir das decisões da equipe, e a navegação Login → Painel do Docente foi implementada com o mínimo de código.
 
 ### AI-Generated or Suggested Content
 
@@ -278,7 +278,7 @@ A IA propôs a estrutura desta especificação, o `NavHost` com as rotas `welcom
 
 ### Human Review and Changes
 
-O Matheus definiu o escopo (só o Painel do Docente, sem formulário nem banco), escolheu o título, o aviso de "Novo acionamento" e a lista vazia. Ao testar no emulador, rejeitou o comportamento do `popUpTo` (o app fechava e, ao reabrir, não voltava ao painel) e pediu a versão mais simples: só o botão "Sair" volta ao Login, com `popBackStack()`. Também pediu código no nível MVP, sem enfeites.
+O Matheus propôs o fluxo e as telas e definiu o escopo (só o Painel do Docente, sem formulário nem banco), escolhendo com a IA o título, o aviso de "Novo acionamento", a lista vazia e a legenda dos níveis. Ao testar no emulador, rejeitou o comportamento do `popUpTo` (o app fechava e, ao reabrir, não voltava ao painel) e pediu a versão mais simples: só o botão "Sair" volta ao Login, com `popBackStack()`. Também pediu código no nível MVP, sem enfeites. Nesta Sprint a IA avançou o código, os testes e o relatório em sequência; o Matheus revisou e validou depois, e estuda o código para poder explicá-lo.
 
 ### AI Validation
 
