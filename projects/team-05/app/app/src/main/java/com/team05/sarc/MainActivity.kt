@@ -12,7 +12,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 
-// Importação da tela inicial e do tema visual criados pela equipe.
+// Importação da navegação entre telas (Sprint 03).
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+
+// Importação das telas e do tema visual criados pela equipe.
+import com.team05.sarc.ui.screens.HomeDocenteScreen
 import com.team05.sarc.ui.screens.WelcomeScreen
 import com.team05.sarc.ui.theme.SARCTheme
 
@@ -38,7 +44,28 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(), // Ocupa 100% da largura e altura.
                     color = MaterialTheme.colorScheme.background // Cor de fundo definida no Theme.kt.
                 ) {
-                    WelcomeScreen() // Desenha a tela inicial de login (arquivo ui/screens/WelcomeScreen.kt).
+                    // Sprint 03: o NavController lembra em qual tela o usuário está.
+                    val navController = rememberNavController()
+
+                    // O NavHost é o "mapa" das telas: 2 rotas, começando no Login ("welcome").
+                    NavHost(navController = navController, startDestination = "welcome") {
+
+                        // Rota "welcome": a tela de login das Sprints 01 e 02.
+                        composable("welcome") {
+                            WelcomeScreen(
+                                // "Entrar" abre o painel (o Login fica guardado embaixo, na pilha).
+                                onLoginClick = { _, _ -> navController.navigate("home") }
+                            )
+                        }
+
+                        // Rota "home": o Painel do Docente (ui/screens/HomeDocenteScreen.kt).
+                        composable("home") {
+                            HomeDocenteScreen(
+                                // "Sair" tira o painel da pilha e volta ao Login.
+                                onSair = { navController.popBackStack() }
+                            )
+                        }
+                    }
                 }
             }
         }
